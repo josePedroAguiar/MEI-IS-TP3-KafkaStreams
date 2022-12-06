@@ -33,18 +33,42 @@ public class SimpleProducer {
         
         Producer<String, String> producer = new KafkaProducer<>(props);
         Random r =new Random();
+        if(topicName=="standard-weather") {   
         for(int i = 0; i < 1000; i++) {
+            
             String []a={"Distrito de Beja","Distrito de Évora","Distrito de Santarém","Distrito de Castelo Branco","Distrito de Bragança","Distrito de Portalegre","Distrito da Guarda",	"Distrito de Setúbal","Distrito de Viseu","Distrito de Faro","Distrito de Vila Real","Distrito de Coimbra","Distrito de Leiria","Distrito de Aveiro","Distrito de Lisboa","Distrito de Braga","Distrito do Porto","Região Autónoma dos Açores",	"Distrito de Viana do Castelo",	"Região Autónoma da Madeira"};
             List<String>list = Arrays.asList(a);
             System.out.println(list.size());
             JSONObject user = new JSONObject();
-            user.put("temperature", r.nextInt(40));
-            user.put("location", "123 Main Street");
             int pos=r.nextInt(list.size());
-            producer.send(new ProducerRecord<String, String>(topicName,list.get(pos),user.toString()));
+            user.put("temperature", r.nextInt(40));
+            user.put("location",list.get(pos) );
+          
+          
+            producer.send(new ProducerRecord<String, String>(topicName,  Integer.toString( (pos%4)),user.toString()));
             if (i % 100 == 0)
                 System.out.println("Sending message " + (i + 1) + " to topic " + topicName);
         }
+    }
+    if(topicName=="weather-alert") {   
+        for(int i = 0; i < 1000; i++) {
+            
+            String []a={"Distrito de Beja","Distrito de Évora","Distrito de Santarém","Distrito de Castelo Branco","Distrito de Bragança","Distrito de Portalegre","Distrito da Guarda",	"Distrito de Setúbal","Distrito de Viseu","Distrito de Faro","Distrito de Vila Real","Distrito de Coimbra","Distrito de Leiria","Distrito de Aveiro","Distrito de Lisboa","Distrito de Braga","Distrito do Porto","Região Autónoma dos Açores",	"Distrito de Viana do Castelo",	"Região Autónoma da Madeira"};
+            List<String>list = Arrays.asList(a);
+            System.out.println(list.size());
+            JSONObject user = new JSONObject();
+            int pos=r.nextInt(list.size());
+            String []flag={"red","green"};
+            int f=r.nextInt(2);
+            user.put("flag",flag[f] );
+            user.put("location",list.get(pos) );
+          
+          
+            producer.send(new ProducerRecord<String, String>(topicName,  Integer.toString( (pos%4)),user.toString()));
+            if (i % 100 == 0)
+                System.out.println("Sending message " + (i + 1) + " to topic " + topicName);
+        }
+    }
         producer.close();
     }
 }
