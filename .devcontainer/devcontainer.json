@@ -1,0 +1,13 @@
+{
+	"name": "maven-kafka+postgres",
+	"dockerComposeFile": "docker-compose-standalone.yml",
+	"workspaceFolder": "/workspace",
+	"service": "command-line",
+	"extensions": [
+		"dotjoshjohnson.xml",
+		"vscjava.vscode-maven",
+		"vscjava.vscode-java-pack",
+		"redhat.fabric8-analytics",
+		"mhutchie.git-graph"
+	]
+}

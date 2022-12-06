@@ -27,7 +27,8 @@ public class SimpleStreamsExercisesb {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Long().getClass());
         
-        StreamsBuilder builder = new StreamsBuilder(); KStream<String, Long> lines = builder.stream(topicName);
+        StreamsBuilder builder = new StreamsBuilder();
+         KStream<String, Long> lines = builder.stream(topicName);
         KTable<String, Long> outlines = lines.groupByKey().count();
         outlines.mapValues(v -> "" + v).toStream().to(outtopicname, Produced.with(Serdes.String(), Serdes.String()));
 

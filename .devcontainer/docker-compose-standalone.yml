@@ -1,0 +1,91 @@
+version: "3.7"
+
+services:
+  database:
+    image: postgres:10.5
+    container_name: database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: My01pass
+      POSTGRES_DB: project3
+    volumes:
+      - ../sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    ports:
+      - 32181:32181
+    healthcheck:
+      test: echo stat | nc localhost 32181
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker1:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker1
+    ports:
+      - 29092:29092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_BROKER_RACK: "r1"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:32181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker1:9092,EXTERNAL://localhost:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  connect:
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile.connect
+    image: confluentinc/cp-kafka-connect
+    container_name: connect
+    depends_on:
+      - broker1
+    ports:
+      - 8083:8083
+    links:
+      - broker1
+      - database
+    environment:
+      - CONNECT_BOOTSTRAP_SERVERS=broker1:9092
+      - CONNECT_REST_ADVERTISED_PORT=8083
+      - CONNECT_REST_ADVERTISED_HOST_NAME=connect
+      - CONNECT_GROUP_ID=connect
+      - CONNECT_CONFIG_STORAGE_TOPIC=_connect_configs
+      - CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR=1
+      - CONNECT_OFFSET_STORAGE_TOPIC=_connect_offsets
+      - CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR=1
+      - CONNECT_STATUS_STORAGE_TOPIC=_connect_status
+      - CONNECT_STATUS_STORAGE_REPLICATION_FACTOR=1
+      - CONNECT_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_PLUGIN_PATH=/usr/share/java,/etc/kafka-connect/jars
+    volumes:
+      - ../config:/config
+      - ../lib:/etc/kafka-connect/jars
+
+  command-line:
+    build:
+      context: .
+      dockerfile: Dockerfile.command-line
+    container_name: command-line
+    command: tail -f /dev/null
+    links:
+      - database
+      - broker1
+      - zookeeper
+    volumes:
+      - ..:/workspace

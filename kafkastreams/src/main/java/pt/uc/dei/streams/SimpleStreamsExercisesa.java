@@ -2,12 +2,18 @@ package pt.uc.dei.streams;
 
 import java.io.IOException;
 import java.util.Properties;
+
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.TopologyTestDriver;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
+import org.json.JSONObject;
 
 public class SimpleStreamsExercisesa {
     
@@ -30,8 +36,8 @@ public class SimpleStreamsExercisesa {
         KStream<String, Long> lines = builder.stream(topicName);
         KTable<String, Long> outlines = lines.groupByKey().count();
         outlines.toStream().to(outtopicname);
-
-        KafkaStreams streams = new KafkaStreams(builder.build(), props); streams.start();
+        KafkaStreams streams = new KafkaStreams(builder.build(), props); 
+        streams.start();
         System.out.println("Reading stream from topic " + topicName);
     } 
 }

@@ -1,0 +1,58 @@
+FROM maven:3-openjdk-18
+
+#From https://gist.github.com/MichalZalecki/4a87880bbe7a3a5428b5aebebaa5cd97
+ARG USER_NAME="main"
+ARG USER_PASSWORD="main"
+
+ENV USER_NAME $USER_NAME
+ENV USER_PASSWORD $USER_PASSWORD
+ENV CONTAINER_IMAGE_VER=v1.0.0
+
+RUN echo $USER_NAME
+RUN echo $USER_PASSWORD
+RUN echo $CONTAINER_IMAGE_VER
+
+# USER root
+
+RUN set -eux \
+  && microdnf install curl \
+#   git-core \
+#   less \
+#   passwd \
+#   sudo \
+#   vim \
+#   wget \
+  zip \
+#   iputils \
+#   zsh \
+  && microdnf clean all
+#   # add a user (--disabled-password: the user won't be able to use the account until the password is set)
+#   && adduser -p ${USER_PASSWORD} --shell /bin/zsh --home /home/$USER_NAME -c "User" ${USER_NAME} \
+#   # update the password
+#   && echo ${USER_NAME}:${USER_PASSWORD} | chpasswd \
+#   && usermod -aG wheel ${USER_NAME}
+
+# # install Kafka
+# RUN curl -O https://archive.apache.org/dist/kafka/2.8.1/kafka_2.13-2.8.1.tgz
+# RUN tar -xzf kafka_2.13-2.8.1.tgz
+# RUN mv kafka_2.13-2.8.1 /opt/
+# # RUN chown -R ${USER_NAME}.${USER_NAME} /opt/kafka_2.13-2.8.1/
+# RUN rm kafka_2.13-2.8.1.tgz
+
+# install jax-ws (wsimport.sh)
+RUN curl -LO https://repo1.maven.org/maven2/com/sun/xml/ws/jaxws-ri/3.0.2/jaxws-ri-3.0.2.zip \
+  && unzip jaxws-ri-3.0.2.zip
+ENV PATH="/jaxws-ri/bin/:${PATH}"
+
+# the user we're applying this too (otherwise it most likely install for root)
+# USER $USER_NAME
+# terminal colors with xterm
+ENV TERM xterm
+# set the zsh theme
+# ENV ZSH_THEME robbyrussell
+
+# run the installation script  
+# RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# start zsh
+CMD [ "zsh" ]
