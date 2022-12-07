@@ -40,7 +40,14 @@ public class SimpleProducer {
             List<String>list = Arrays.asList(a);
             System.out.println(list.size());
             JSONObject user = new JSONObject();
+
             int pos=r.nextInt(list.size());
+            String []condition={"fog","rain","snow","hail"};
+            List<String>list1 = Arrays.asList(condition);
+            int pos1=r.nextInt(list1.size());
+
+
+            user.put("atmospheric condition",list1.get(pos1));
             user.put("temperature", r.nextInt(40));
             user.put("location",list.get(pos) );
           
@@ -58,8 +65,17 @@ public class SimpleProducer {
             System.out.println(list.size());
             JSONObject user = new JSONObject();
             int pos=r.nextInt(list.size());
+
+
+            
             String []flag={"red","green"};
             int f=r.nextInt(2);
+            String []condition={"hunderstorms", "hurricanes", "blizzards", "droughts"};
+            List<String>list1 = Arrays.asList(condition);
+            int pos1=r.nextInt(list1.size());
+
+
+            user.put("atmospheric condition",list1.get(pos1));
             user.put("flag",flag[f] );
             user.put("location",list.get(pos) );
           
