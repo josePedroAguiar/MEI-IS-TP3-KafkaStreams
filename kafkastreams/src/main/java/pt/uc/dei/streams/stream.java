@@ -47,7 +47,7 @@ public class stream {
 
         // Read the input topic as a stream of messages
         KStream<String, StandardWeather> inputStream = builder.stream(inputTopic,
-                Consumed.with(Serdes.String(), new StandardWeatherSerde()));
+                Consumed.with(Serdes.String(), new StandardWeatherSerde(null, null)));
 
         // Extract the temperature and weather station data from the messages
         KStream<String, StandardWeather> temperatureReadingsStream = inputStream.map((key, value) -> new KeyValue<String, StandardWeather> (key, new StandardWeather(value.getTemperature(), value.getLocation())));

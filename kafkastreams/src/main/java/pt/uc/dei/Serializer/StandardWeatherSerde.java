@@ -11,75 +11,37 @@ import org.apache.kafka.common.serialization.Serializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class StandardWeatherSerde implements Serde<StandardWeather>, Serializer<StandardWeather> {
+public class StandardWeatherSerde
+        implements Serde<StandardWeather> {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    final private Serializer<StandardWeather> serializer;
+    final private Deserializer<StandardWeather> deserializer;
+
+    public StandardWeatherSerde(Serializer<StandardWeather> serializer, Deserializer<StandardWeather> deserializer) {
+                this.serializer = serializer;
+                this.deserializer = deserializer;
+            }
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
-        // Nothing to configure
+        serializer.configure(configs, isKey);
+        deserializer.configure(configs, isKey);
     }
 
     @Override
     public void close() {
-        // Nothing to close
+        serializer.close();
+        deserializer.close();
     }
 
     @Override
     public Serializer<StandardWeather> serializer() {
-        return new Serializer<StandardWeather>() {
-
-            @Override
-            public void configure(Map<String, ?> configs, boolean isKey) {
-                // Nothing to configure
-            }
-
-            @Override
-            public byte[] serialize(String topic, StandardWeather data) {
-                try {
-                    return objectMapper.writeValueAsBytes(data);
-                } catch (JsonProcessingException e) {
-                    throw new SerializationException("Error serializing StandardWeather object", e);
-                }
-            }
-            
-
-            @Override
-            public void close() {
-                // Nothing to close
-            }
-        };
+        return serializer;
     }
 
     @Override
     public Deserializer<StandardWeather> deserializer() {
-        return new Deserializer<StandardWeather>() {
-
-            @Override
-            public void configure(Map<String, ?> configs, boolean isKey) {
-                // Nothing to configure
-            }
-
-            @Override
-            public StandardWeather deserialize(String topic, byte[] data) {
-                try {
-                    return objectMapper.readValue(data, StandardWeather.class);
-                } catch (IOException e) {
-                    throw new SerializationException("Error deserializing StandardWeather object", e);
-                }
-            }
-
-            @Override
-            public void close() {
-                // Nothing to close
-            }
-        };
-    }
-
-    @Override
-    public byte[] serialize(String topic, StandardWeather data) {
-        // TODO Auto-generated method stub
-        return null;
+        return deserializer;
     }
 
 }
