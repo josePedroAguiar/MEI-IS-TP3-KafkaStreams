@@ -17,4 +17,12 @@ public class WeatherAlert {
         this.location = location;
     }
 
+    public Object getWeatherStation() {
+        return null;
+    }
+
+    public Object getTemperature() {
+        return null;
+    }
+
 }

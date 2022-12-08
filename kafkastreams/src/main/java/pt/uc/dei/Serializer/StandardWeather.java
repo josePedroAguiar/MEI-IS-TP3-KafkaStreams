@@ -1,8 +1,5 @@
 package pt.uc.dei.Serializer;
-import org.json.JSONPropertyName;
 
-import lombok.Builder;
-import lombok.Data;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 
@@ -17,6 +14,14 @@ public class StandardWeather {
     public StandardWeather(int temperature, String location) {
         this.temperature = temperature;
         this.location = location;
+    }
+
+    public int getTemperature() {
+        return 0;
+    }
+
+    public String getLocation() {
+        return null;
     }
 
 }

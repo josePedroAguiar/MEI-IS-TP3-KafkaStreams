@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pt.uc.dei.Serializer.StandardWeather;
+import pt.uc.dei.Serializer.StandardWeatherSerde;
 import pt.uc.dei.Serializer.WeatherAlert;
 
 public class SimpleProducer {
@@ -40,7 +41,7 @@ public class SimpleProducer {
         // producer for buffering.
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", StandardWeatherSerde.class.getName());
 
         /*
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
@@ -55,9 +56,9 @@ public class SimpleProducer {
         */
         Random r = new Random();
         ObjectMapper mapper = new ObjectMapper();
-        Producer<String, String> producer = new KafkaProducer<>(props);
 
-        if (topicName.equals("standard-weather")) {
+        if (topicName.equals("standard-weather7")) {
+            Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
 
             for (int i = 0; i < 10; i++) {
 
@@ -69,21 +70,21 @@ public class SimpleProducer {
                         "Distrito de Viana do Castelo", "Região Autónoma da Madeira" };
                 List<String> list = Arrays.asList(a);
                 System.out.println(list.size());
-                JSONObject user = new JSONObject();
+                //JSONObject user = new JSONObject();
 
                 int pos = r.nextInt(list.size());
                 String[] condition = { "fog", "rain", "snow", "hail" };
                 List<String> list1 = Arrays.asList(condition);
                 int pos1 = r.nextInt(list1.size());
 
-                //StandardWeather user = new StandardWeather(r.nextInt(50) - 10, list.get(pos));
+                StandardWeather user = new StandardWeather(r.nextInt(50) - 10, list.get(pos));
                 //JsonNode node = mapper.valueToTree(user);
-                user.put("atmospheric condition",list1.get(pos1));
-                user.put("temperature", r.nextInt(40));
-                user.put("location",list.get(pos) );
+                //user.put("atmospheric condition",list1.get(pos1));
+                //user.put("temperature", r.nextInt(40));
+                //user.put("location",list.get(pos) );
 
                 producer.send(
-                        new ProducerRecord<String,String>(topicName, Integer.toString((pos % 4)), user.toString()));
+                        new ProducerRecord<String,StandardWeather>(topicName, Integer.toString((pos % 4)), user));
                 if (i % 100 == 0)
                     System.out.println("Sending message " + (i + 1) + " to topic " + topicName);
             }
@@ -92,6 +93,7 @@ public class SimpleProducer {
         }
         else if (topicName.equals("weather-alert5")) {
             //Producer<String, String> producer = new KafkaProducer<>(props);
+            Producer<String, String> producer = new KafkaProducer<>(props);
 
             for (int i = 0; i < 10; i++) {
 
