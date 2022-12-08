@@ -17,12 +17,10 @@ public class WeatherAlert {
         this.location = location;
     }
 
-    public Object getWeatherStation() {
-        return null;
+    public String getLocation() {
+        return location;
     }
-
-    public Object getTemperature() {
-        return null;
+    public String getType() {
+        return type;
     }
-
 }

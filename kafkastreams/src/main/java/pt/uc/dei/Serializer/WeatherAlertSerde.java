@@ -11,7 +11,8 @@ import org.apache.kafka.common.serialization.Serializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class WeatherAlertSerde implements Serde<WeatherAlert> {
+public class WeatherAlertSerde
+        implements Serde<WeatherAlert>, Serializer<WeatherAlert>, Deserializer<WeatherAlert> {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -26,53 +27,32 @@ public class WeatherAlertSerde implements Serde<WeatherAlert> {
     }
 
     @Override
+    public byte[] serialize(String topic, WeatherAlert data) {
+        try {
+            System.out.println("Serializing...");
+            
+            return objectMapper.writeValueAsBytes(data);
+        } catch (JsonProcessingException e) {
+            throw new SerializationException("Error serializing WeatherAlert object", e);
+        }
+    }
+
+    @Override
+    public WeatherAlert deserialize(String topic, byte[] data) {
+        try {
+            System.out.println("Desserializing...");
+            return objectMapper.readValue(data, WeatherAlert.class);
+        } catch (IOException e) {
+            throw new SerializationException("Error deserializing WeatherAlert object", e);
+        }
+    }
+    @Override
     public Serializer<WeatherAlert> serializer() {
-        return new Serializer<WeatherAlert>() {
-
-            @Override
-            public void configure(Map<String, ?> configs, boolean isKey) {
-                // Nothing to configure
-            }
-
-            @Override
-            public byte[] serialize(String topic, WeatherAlert data) {
-                try {
-                    return objectMapper.writeValueAsBytes(data);
-                } catch (JsonProcessingException e) {
-                    throw new SerializationException("Error serializing WeatherAlert object", e);
-                }
-            }
-
-            @Override
-            public void close() {
-                // Nothing to close
-            }
-        };
+        return this;
     }
 
     @Override
     public Deserializer<WeatherAlert> deserializer() {
-        return new Deserializer<WeatherAlert>() {
-
-            @Override
-            public void configure(Map<String, ?> configs, boolean isKey) {
-                // Nothing to configure
-            }
-
-            @Override
-            public WeatherAlert deserialize(String topic, byte[] data) {
-                try {
-                    return objectMapper.readValue(data, WeatherAlert.class);
-                } catch (IOException e) {
-                    throw new SerializationException("Error deserializing WeatherAlert object", e);
-                }
-            }
-
-            @Override
-            public void close() {
-                // Nothing to close
-            }
-        };
+        return this;
     }
-
 }
