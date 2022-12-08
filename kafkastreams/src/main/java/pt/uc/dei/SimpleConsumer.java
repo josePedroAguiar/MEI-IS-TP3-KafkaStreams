@@ -37,6 +37,7 @@ public class SimpleConsumer {
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.println(record.key() + " => " + record.value()); 
                 }
+                return;
             }    
         }
         finally {
