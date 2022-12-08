@@ -9,6 +9,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import pt.uc.dei.Serializer.StandardWeather;
+import pt.uc.dei.Serializer.StandardWeatherSerde;
+
 public class SimpleConsumer {
     public static void main(String[] args) throws Exception{
         //Assign topicName to string variable
@@ -27,14 +30,14 @@ public class SimpleConsumer {
         props.put("buffer.memory", 33554432);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaExampleConsumer");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        Consumer<String, String> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
+        props.put("value.deserializer", StandardWeatherSerde.class.getName());
+        Consumer<String, StandardWeather> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
         
         try {
             while (true) {
                 Duration d = Duration.ofSeconds(1000000);
-                ConsumerRecords<String, String> records = consumer.poll(d);
-                for (ConsumerRecord<String, String> record : records) {
+                ConsumerRecords<String, StandardWeather> records = consumer.poll(d);
+                for (ConsumerRecord<String, StandardWeather> record : records) {
                     System.out.println(record.key() + " => " + record.value()); 
                 }
                 return;
