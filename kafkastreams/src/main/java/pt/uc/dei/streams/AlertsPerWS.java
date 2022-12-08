@@ -32,7 +32,7 @@ public class AlertsPerWS {
         streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, WeatherAlertSerde.class.getName());
 
         // Define the input and output topics
-        String inputTopic = "weather-alert10";
+        String inputTopic = "weather-alert11";
         String outputTopic = "temperature-readings-count3";
 
         // Create a Kafka Streams builder
