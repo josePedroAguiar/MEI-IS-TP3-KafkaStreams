@@ -1,9 +1,6 @@
 package pt.uc.dei.streams;
 
 import java.io.IOException;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
 import java.util.Properties;
 
 import org.apache.kafka.common.serialization.Serdes;
@@ -16,12 +13,8 @@ import org.apache.kafka.streams.kstream.KTable;
 import pt.uc.dei.Serializer.WeatherAlert;
 import pt.uc.dei.Serializer.WeatherAlertSerde;
 
-public class  MinTemperatureOfWS {
 
 
-    
-=======
->>>>>>> Stashed changes
 import java.time.Duration;
 import java.util.Properties;
 
@@ -116,8 +109,4 @@ public class MinTemperatureOfWS {
         streams1.start();
         streams2.start();
     }
-<<<<<<< Updated upstream
-=======
->>>>>>> 85244383c4e019c341b6d09a1a6ce80d159c76d9
->>>>>>> Stashed changes
 }

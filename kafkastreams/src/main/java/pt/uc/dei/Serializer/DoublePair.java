@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.common.serialization.Deserializer;
 
-public class DoublePair implements Deserializer<  DoublePair >{
+public class DoublePair{
     private double min;
     private double max;
 
@@ -33,23 +33,5 @@ public class DoublePair implements Deserializer<  DoublePair >{
 
     public double getMax() {
         return max;
-    }
-    @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {
-        // no configuration required
-    }
-
-    @Override
-    public DoublePair deserialize(String topic, byte[] data) {
-        ByteBuffer buffer = ByteBuffer.wrap(data);
-        double first = buffer.getDouble();
-        double second = buffer.getDouble();
-        return new DoublePair(first, second);
-
-    }
-
-    @Override
-    public void close() {
-        // no cleanup required
     }
 }
