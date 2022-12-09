@@ -42,8 +42,8 @@ public class SimpleProducer {
         // producer for buffering.
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        //props.put("value.serializer", StandardWeatherSerde.class.getName());
-        props.put("value.serializer", WeatherAlertSerde.class.getName());
+        props.put("value.serializer", StandardWeatherSerde.class.getName());
+        //props.put("value.serializer", WeatherAlertSerde.class.getName());
 
         /*
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
@@ -59,7 +59,7 @@ public class SimpleProducer {
         Random r = new Random();
         ObjectMapper mapper = new ObjectMapper();
 
-        if (topicName.equals("standard-weather10")) {
+        if (topicName.equals("standard-weather22")) {
             Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
 
             for (int i = 0; i < 10; i++) {
@@ -74,9 +74,9 @@ public class SimpleProducer {
                 //JSONObject user = new JSONObject();
 
                 int pos = r.nextInt(list.size());
-                String[] condition = { "fog", "rain", "snow", "hail" };
-                List<String> list1 = Arrays.asList(condition);
-                int pos1 = r.nextInt(list1.size());
+                //String[] condition = { "fog", "rain", "snow", "hail" };
+                //List<String> list1 = Arrays.asList(condition);
+                //int pos1 = r.nextInt(list1.size());
 
                 StandardWeather user = new StandardWeather(r.nextInt(50) - 10, list.get(pos));
                 //JsonNode node = mapper.valueToTree(user);

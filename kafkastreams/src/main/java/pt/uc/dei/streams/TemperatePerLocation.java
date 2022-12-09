@@ -33,8 +33,8 @@ public class TemperatePerLocation {
 
 
         // Define the input and output topics
-        String inputTopic = "standard-weather10";
-        String outputTopic = "temperature-readings-count2";
+        String inputTopic = "standard-weather22";
+        String outputTopic = "temperature-readings-count22";
 
         // Create a Kafka Streams builder
         StreamsBuilder builder = new StreamsBuilder();
