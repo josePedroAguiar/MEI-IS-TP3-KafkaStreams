@@ -3,7 +3,9 @@ package pt.uc.dei.streams;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
@@ -16,6 +18,7 @@ import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.Reducer;
+import org.apache.kafka.streams.state.KeyValueStore;
 
 import pt.uc.dei.Serializer.DoublePair;
 import pt.uc.dei.Serializer.DoublePairSerde;
@@ -55,9 +58,10 @@ public class MinMaxTemperaturePerWS {
                 .aggregate(
                         () -> Integer.MIN_VALUE, // Initialize the aggregation value with the minimum possible integer
                                                  // value
-                        (key, value, aggregate) -> Math.max(value.getTemperature(), aggregate) // Use the max function
+                        (key, value, aggregate) -> Math.max(value.getTemperature(), aggregate), // Use the max function
                                                                                                 // to calculate the
                                                                                                 // maximum value
+                        Materialized.<String, Integer, KeyValueStore<Bytes, byte[]>>as("max-store").withValueSerde(Serdes.Integer())// Materialize the aggregation results in a store named "max-store"
                 );
 
         // Use the min aggregation function to calculate the minimum value in the stream
@@ -66,9 +70,10 @@ public class MinMaxTemperaturePerWS {
                 .aggregate(
                         () -> Integer.MAX_VALUE, // Initialize the aggregation value with the maximum possible integer
                                                  // value
-                        (key, value, aggregate) -> Math.min(value.getTemperature(), aggregate) // Use the min function
+                        (key, value, aggregate) -> Math.min(value.getTemperature(), aggregate), // Use the min function
                                                                                                 // to calculate the
                                                                                                 // minimum value
+                        Materialized.<String, Integer, KeyValueStore<Bytes, byte[]>>as("min-store") // Materialize the aggregation results in a store named "min-store"
                 );
         KStream<String, DoublePair> outputStream = maxTable
                 .join(minTable, (max, min) -> new DoublePair(max, min)).toStream();
