@@ -28,7 +28,7 @@ import pt.uc.dei.Serializer.StandardWeather;
 import pt.uc.dei.Serializer.StandardWeatherSerde;
 import static java.lang.Math.*;
 
-public class MinMaxTemperaturePerWS {
+public class MinMaxTemperaturePerLocation {
         public static void main(String[] args) throws InterruptedException, IOException {
                 StandardWeatherSerde standardWeatherSerde;
                 if (args.length != 2) {
