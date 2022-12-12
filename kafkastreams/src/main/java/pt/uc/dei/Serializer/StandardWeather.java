@@ -37,6 +37,12 @@ public class StandardWeather {
         this.min = min;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
     public int getTemperature() {
         return temperature;
     }

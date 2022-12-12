@@ -59,7 +59,7 @@ public class SimpleProducer {
         Random r = new Random();
         ObjectMapper mapper = new ObjectMapper();
 
-        if (topicName.equals("standard-weather22")) {
+        if (topicName.equals("standard-weather23")) {
             Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
 
             for (int i = 0; i < 10; i++) {
