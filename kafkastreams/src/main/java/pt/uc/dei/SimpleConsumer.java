@@ -38,9 +38,15 @@ public class SimpleConsumer {
         //props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         //props.put("value.deserializer", "org.apache.kafka.common.serialization.LongDeserializer");
         //Consumer<String, Long> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
+
+
+        //props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        //props.put("value.deserializer", DoublePairSerde.class.getName());
+        //Consumer<String, DoublePair> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
+
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer", DoublePairSerde.class.getName());
-        Consumer<String, DoublePair> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
+        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        Consumer<String, String> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
              /*try {
             while (true) {
                 Duration d = Duration.ofSeconds(1000000);
@@ -68,12 +74,25 @@ public class SimpleConsumer {
             consumer.close();
         }*/
 
-        try {
+        /*try {
             while (true) {
                 Duration d = Duration.ofSeconds(1000000);
                 ConsumerRecords<String, DoublePair> records = consumer.poll(d);
                 for (ConsumerRecord<String, DoublePair> record : records) {
                     System.out.println(record.key() + " => " + record.value().getMax() + " "+ record.value().getMin()); 
+                }
+                return;
+            }    
+        }
+        finally {
+            consumer.close();
+        }*/
+        try {
+            while (true) {
+                Duration d = Duration.ofSeconds(1000000);
+                ConsumerRecords<String, String> records = consumer.poll(d);
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.println(record.key() + " => " + record); 
                 }
                 return;
             }    
