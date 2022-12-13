@@ -76,24 +76,31 @@ public class MinTemperatureOfWS {
         KStream<String, WeatherAlert> inputStream1 = builder1.stream(inputTopic1,
                 Consumed.with(Serdes.String(), new WeatherAlertSerde()));
 
-        KTable<String, Long> filteredStream1 = inputStream1
+        KStream<String, WeatherAlert> filteredStream1 = inputStream1
                 // Filter out events that do not have a red alert
                 .filter((key, value) -> value.getType().equals("red"))
-                .groupByKey()
-                .count()
+                
                 ;
+        filteredStream1.mapValues((key,value) -> {
+            System.out.println(value.getType() + " "+ value.getLocation());
+            return 1;
+        });
+
+        KTable<String, Long> filteredStream0 = filteredStream1.groupByKey().count();
 
         // Read the input topic as a stream of messages
         KStream<String, StandardWeather> inputStream2 = builder1.stream(inputTopic2,
         Consumed.with(Serdes.String(), new StandardWeatherSerde()));
 
         KStream<String, StandardWeather> filteredStream2 = inputStream2
-        .join(filteredStream1,
+        .join(filteredStream0,
               (value1, value2) -> value1,
               Joined.with(Serdes.String(), new StandardWeatherSerde(), Serdes.Long())
         );
 
-        filteredStream2.mapValues((key,value) -> value.getTemperature());
+        filteredStream2.mapValues((key,value) -> 
+        { System.out.println(value.getTemperature() + " "+ value.getLocation());return Integer.toString(value.getTemperature()) + value.getLocation();});
+
         
         // Write the output to the specified output topic
         filteredStream2.to(outputFinal, Produced.with(Serdes.String(), new StandardWeatherSerde()));
