@@ -55,7 +55,7 @@ public class MinMaxTemperaturePerWS {
         KStream<String, StandardWeather> weatherStream = builder.stream(inputTopic);
 
         // group the stream by location
-
+        /* 
         KTable<String, Integer> maxTable = weatherStream
                 .groupByKey()
                 .aggregate(
@@ -115,6 +115,16 @@ public class MinMaxTemperaturePerWS {
         // minTable.toStream().to(outputTopic, Produced.with(Serdes.String(),
         // Serdes.Integer()));
 
+        */
+        weatherStream.groupByKey()
+        .aggregate(() -> new int[]{0, 0}, (aggKey, newValue, aggValue) -> {
+            aggValue[0]= Math.min(newValue.getTemperature(),aggValue[0]);
+            aggValue[1]= Math.max(newValue.getTemperature(),aggValue[1]);
+                return aggValue;
+        }, Materialized.with(Serdes.String(), new IntArraySerde()))
+        .mapValues(v -> " Min:"+v[0]+" Max:"+v[1]).toStream()
+        .to( outputTopic, Produced.with(Serdes.String(), Serdes.String()));
+
         // Create the Kafka Streams instance
         KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfig);
 
@@ -123,8 +133,6 @@ public class MinMaxTemperaturePerWS {
 
     }
 
-    public static int toFahrenheit(int temperature) {
-        return (((temperature * 9) / 5) + 32);
-    }
+
 
 }

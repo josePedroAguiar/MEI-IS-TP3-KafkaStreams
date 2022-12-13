@@ -44,8 +44,8 @@ public class MinMaxTemperaturePerLocation {
                 streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class);
 
                 // Define the input and output topics
-                String inputTopic = "standard-weather23";
-                String outputTopic = "temperature-readings-count23";
+                String inputTopic = "standard-weather101";
+                String outputTopic = "temperature-readings-count101";
 
                 // Create a Kafka Streams builder
                 StreamsBuilder builder = new StreamsBuilder();
@@ -57,7 +57,7 @@ public class MinMaxTemperaturePerLocation {
 
                 // group the stream by location
 
-                KTable<String, Integer> maxTable = weatherStream
+               /*  KTable<String, Integer> maxTable = weatherStream
                                 .groupBy((key, value) -> value.getLocation())
                                 .aggregate(
                                                 () -> Integer.MIN_VALUE, // Initialize the aggregation value with the
@@ -115,13 +115,25 @@ public class MinMaxTemperaturePerLocation {
                 // Write the result to the output topic
                 // minTable.toStream().to(outputTopic, Produced.with(Serdes.String(),
                 // Serdes.Integer()));
+*/
+                weatherStream.groupBy((key, value) -> value.getLocation())
+                .aggregate(() -> new int[]{0, 0}, (aggKey, newValue, aggValue) -> {
+                    aggValue[0]=Math.min(toFahrenheit(newValue.getTemperature()),aggValue[0]);
+                    aggValue[1]= Math.max(toFahrenheit(newValue.getTemperature()),aggValue[1]);
+                        return aggValue;
+                }, Materialized.with(Serdes.String(), new IntArraySerde()))
+                .mapValues(v -> " Min:"+v[0]+" Max:"+v[1]).toStream()
+                .to( outputTopic, Produced.with(Serdes.String(), Serdes.String()));
 
                 // Create the Kafka Streams instance
                 KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfig);
 
                 // Start the Kafka Streams instance
                 streams.start();
+               
 
         }
-
+        public static int toFahrenheit(int temperature) {
+            return (((temperature * 9) / 5) + 32);
+        }
 }

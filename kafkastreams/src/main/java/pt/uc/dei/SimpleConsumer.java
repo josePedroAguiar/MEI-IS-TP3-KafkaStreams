@@ -92,7 +92,7 @@ public class SimpleConsumer {
                 Duration d = Duration.ofSeconds(1000000);
                 ConsumerRecords<String, String> records = consumer.poll(d);
                 for (ConsumerRecord<String, String> record : records) {
-                    System.out.println(record.key() + " => " + record); 
+                    System.out.println(record.key() + " => " + record.value()); 
                 }
                 return;
             }    
