@@ -43,7 +43,7 @@ public class SimpleProducer {
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         //props.put("value.serializer", StandardWeatherSerde.class.getName());
-        props.put("value.serializer", WeatherAlertSerde.class.getName());
+        //props.put("value.serializer", WeatherAlertSerde.class.getName());
 
         /*
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
@@ -60,6 +60,8 @@ public class SimpleProducer {
         ObjectMapper mapper = new ObjectMapper();
 
         if (topicName.equals("standard-weather11")) {
+            props.put("value.serializer", StandardWeatherSerde.class.getName());
+
             Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
 
             for (int i = 0; i < 10; i++) {
@@ -94,6 +96,8 @@ public class SimpleProducer {
 
         }
         else if (topicName.equals("weather-alert11")) {
+            props.put("value.serializer", WeatherAlertSerde.class.getName());
+
             //Producer<String, String> producer = new KafkaProducer<>(props);
             Producer<String, WeatherAlert> producer = new KafkaProducer<>(props);
 

@@ -38,14 +38,14 @@ public class AvgTemperaturePerWS {
                 }
                 // Create a Kafka Streams configuration object
                 Properties streamsConfig = new Properties();
-                streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-a33");
+                streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-111");
                 streamsConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
                 streamsConfig.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
                 streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class);
 
                 // Define the input and output topics
-                String inputTopic = "standard-weather33";
-                String outputTopic = "temperature-readings-count33";
+                String inputTopic = "standard-weather34";
+                String outputTopic = "temperature-readings-count34";
 
                 // Create a Kafka Streams builder
                 StreamsBuilder builder = new StreamsBuilder();
@@ -57,23 +57,17 @@ public class AvgTemperaturePerWS {
 
                 // group the stream by location
 
-                KTable<String, DoublePair> maxTable = weatherStream
-                                .groupByKey()
-                                .aggregate(
-                                        () -> new DoublePair(0, 0),
-                                        // Aggregator
-                                        (key, value, aggregate) -> 
-                                        new DoublePair(aggregate.getMax() + value.getTemperature(), aggregate.getMin() +1),
-                                        // Materialized
-                                        Materialized.<String, DoublePair, KeyValueStore<Bytes, byte[]>>as(
-                                                "average-aggregator").withValueSerde(serde)
-                                );
+                 weatherStream.groupByKey()
+                                .aggregate(() -> new int[]{0, 0}, (aggKey, newValue, aggValue) -> {
+                                        aggValue[0] += 1;
+                                        aggValue[1] += newValue.getTemperature();
+                                        return aggValue;
+                                }, Materialized.with(Serdes.String(), new IntArraySerde()))
+                        .mapValues(v -> v[0] != 0 ? "" + (1.0 * v[1]) / v[0] : "div by 0")
+            .toStream()
+            .to( outputTopic, Produced.with(Serdes.String(), Serdes.String()));
 
-                KStream<String, String> outputStream = maxTable.toStream().mapValues(value -> Double.toString(value.average()) );
-                //KStream<String, DoublePair> outputStream = maxTable.join(minTable, (max, min) -> new DoublePair(max, min)).toStream();
-
-                outputStream.to(outputTopic, Produced.with(Serdes.String(),Serdes.String()));
-
+              
 
                 // Write the result to the output topic
                 // minTable.toStream().to(outputTopic, Produced.with(Serdes.String(),
