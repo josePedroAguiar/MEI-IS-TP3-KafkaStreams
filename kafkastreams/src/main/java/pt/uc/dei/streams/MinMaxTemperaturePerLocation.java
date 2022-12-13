@@ -122,7 +122,7 @@ public class MinMaxTemperaturePerLocation {
                     aggValue[1]= Math.max(toFahrenheit(newValue.getTemperature()),aggValue[1]);
                         return aggValue;
                 }, Materialized.with(Serdes.String(), new IntArraySerde()))
-                .mapValues(v -> " Min:"+v[0]+" Max:"+v[1]).toStream()
+                .mapValues(v -> " Min:"+Integer.toString(v[0])+" Max:"+Integer.toString(v[1])).toStream()
                 .to( outputTopic, Produced.with(Serdes.String(), Serdes.String()));
 
                 // Create the Kafka Streams instance

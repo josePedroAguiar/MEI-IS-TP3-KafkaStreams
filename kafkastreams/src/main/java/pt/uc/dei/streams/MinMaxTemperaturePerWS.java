@@ -38,14 +38,14 @@ public class MinMaxTemperaturePerWS {
         }
         // Create a Kafka Streams configuration object
         Properties streamsConfig = new Properties();
-        streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-a");
+        streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-b");
         streamsConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
         streamsConfig.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class);
 
         // Define the input and output topics
-        String inputTopic = "standard-weather23";
-        String outputTopic = "temperature-readings-count23";
+        String inputTopic = "standard-weather5";
+        String outputTopic = "temperature-readings-count5";
 
         // Create a Kafka Streams builder
         StreamsBuilder builder = new StreamsBuilder();
@@ -117,12 +117,14 @@ public class MinMaxTemperaturePerWS {
 
         */
         weatherStream.groupByKey()
-        .aggregate(() -> new int[]{0, 0}, (aggKey, newValue, aggValue) -> {
+        .aggregate(() -> new int[]{0, 0}, 
+        (aggKey, newValue, aggValue) -> {
             aggValue[0]= Math.min(newValue.getTemperature(),aggValue[0]);
             aggValue[1]= Math.max(newValue.getTemperature(),aggValue[1]);
                 return aggValue;
-        }, Materialized.with(Serdes.String(), new IntArraySerde()))
-        .mapValues(v -> " Min:"+v[0]+" Max:"+v[1]).toStream()
+        }
+        , Materialized.with(Serdes.String(), new IntArraySerde()))
+        .mapValues(v -> " Min:"+Integer.toString(v[0])+" Max:"+Integer.toString(v[1])).toStream()
         .to( outputTopic, Produced.with(Serdes.String(), Serdes.String()));
 
         // Create the Kafka Streams instance
