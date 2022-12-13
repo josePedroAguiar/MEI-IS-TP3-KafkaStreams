@@ -9,11 +9,10 @@ import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KGroupedStream;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.Materialized;
 
 import pt.uc.dei.Serializer.WeatherAlert;
 import pt.uc.dei.Serializer.WeatherAlertSerde;
-
-
 
 import java.time.Duration;
 import java.util.Properties;
@@ -52,9 +51,7 @@ public class MinTemperatureOfWS {
         props1.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
         props1.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props1.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, WeatherAlertSerde.class.getName());
-        StreamsBuilder builder1 = new StreamsBuilder();
-
-        KafkaStreams streams1 = new KafkaStreams(builder1.build(), props1);
+        
 
         // Create a Kafka Streams configuration object
         Properties props2 = new Properties();
@@ -62,9 +59,7 @@ public class MinTemperatureOfWS {
         props2.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
         props2.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props2.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class.getName());
-        StreamsBuilder builder2 = new StreamsBuilder();
-
-        KafkaStreams streams2 = new KafkaStreams(builder2.build(), props2);
+        
 
         // Set up input and output topics
         String inputTopic1 = "weather-alert11";
@@ -73,40 +68,41 @@ public class MinTemperatureOfWS {
 
         String outputFinal = "min-temp-red-alert-weather-station";
 
+        StreamsBuilder builder1 = new StreamsBuilder();
+        //StreamsBuilder builder2 = new StreamsBuilder();
+
+
         // Read the input topic as a stream of messages
         KStream<String, WeatherAlert> inputStream1 = builder1.stream(inputTopic1,
                 Consumed.with(Serdes.String(), new WeatherAlertSerde()));
 
-        KTable<String, String> filteredStream1 = inputStream1
-                // Join the input stream with the output from the first Kafka Streams instance
-                .join(filteredStream1, (weather, alert) -> weather)
+        KTable<String, Long> filteredStream1 = inputStream1
                 // Filter out events that do not have a red alert
-                .filter((key, value) -> value.equals("red"))
-                .groupByKey();
+                .filter((key, value) -> value.getType().equals("red"))
+                .groupByKey()
+                .count()
+                ;
+
         // Read the input topic as a stream of messages
-        KStream<String, WeatherAlert> inputStream2 = builder2.stream(inputTopic2,
-                Consumed.with(Serdes.String(), new WeatherAlertSerde()));
+        KStream<String, StandardWeather> inputStream2 = builder1.stream(inputTopic2,
+        Consumed.with(Serdes.String(), new StandardWeatherSerde()));
 
-        Duration joinWindowSizeMs = Duration.ofHours(1);
-        Duration gracePeriod = Duration.ofHours(24);
-        KTable<String, String> filteredStream2 = inputStream2
-                // Join the events from the "standard-weather" and "red-alert-weather-station"
-                // topics based on their weather station name
-                .join(filteredStream1,
-                        (standardWeather, alert) -> standardWeather,
-                        JoinWindows.ofTimeDifferenceAndGrace(joinWindowSizeMs,gracePeriod ))
-                // Calculate the minimum temperature of the weather stations with red alert
-                // events
-                .groupBy((key, value) -> "min-temp-red-alert-weather-station",
-                        Grouped.with(Serdes.String(), new StandardWeatherSerde()))
-                .reduce((aggValue, newValue) -> newValue.getTemperature() < aggValue.getTemperature() ? newValue
-                        : aggValue);
+        KStream<String, StandardWeather> filteredStream2 = inputStream2
+        .join(filteredStream1,
+              (value1, value2) -> value1,
+              Joined.with(Serdes.String(), new StandardWeatherSerde(), Serdes.Long())
+        );
 
+        filteredStream2.mapValues((key,value) -> value.getTemperature());
+        
         // Write the output to the specified output topic
-        filteredStream2.toStream().to(outputFinal, Produced.with(Serdes.String(), new StandardWeatherSerde()));
+        filteredStream2.to(outputFinal, Produced.with(Serdes.String(), new StandardWeatherSerde()));
 
-        // Start processing the input streams
+        KafkaStreams streams1 = new KafkaStreams(builder1.build(), props1);
         streams1.start();
-        streams2.start();
+        // KafkaStreams streams2 = new KafkaStreams(builder2.build(), props2);
+        // streams2.start();
+        // System.out.println("################################################################3");
+
     }
 }

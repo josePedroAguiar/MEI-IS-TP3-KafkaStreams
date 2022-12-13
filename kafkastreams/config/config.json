@@ -1,0 +1,14 @@
+{
+    "name":"connect-jdbc-source",
+    "config": {
+        "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+        "connection.url":"jdbc:postgresql://database:5432/project3",
+        "connection.user":"postgres",
+        "connection.password":"My01pass",
+        "dialect.name":"PostgreSqlDatabaseDialect",
+        "mode":"bulk",
+        "query":"SELECT * FROM countries;",
+        "poll.interval.ms":"60000",
+        "topic.prefix":"project3fromDB"
+    }
+}

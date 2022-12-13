@@ -30,7 +30,8 @@ public class TheoreticalClass {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Long().getClass());
         
-        StreamsBuilder builder = new StreamsBuilder(); KStream<String, Long> lines = builder.stream(topicName);
+        StreamsBuilder builder = new StreamsBuilder(); 
+        KStream<String, Long> lines = builder.stream(topicName);
 
         /* count() */
         KTable<String, Long> outlines = lines.groupByKey().count();

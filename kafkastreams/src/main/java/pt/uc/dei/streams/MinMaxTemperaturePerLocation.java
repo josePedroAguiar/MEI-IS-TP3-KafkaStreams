@@ -44,8 +44,8 @@ public class MinMaxTemperaturePerLocation {
                 streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class);
 
                 // Define the input and output topics
-                String inputTopic = "standard-weather23";
-                String outputTopic = "temperature-readings-count23";
+                String inputTopic = "standard-weather11";
+                String outputTopic = "min-temp";
 
                 // Create a Kafka Streams builder
                 StreamsBuilder builder = new StreamsBuilder();

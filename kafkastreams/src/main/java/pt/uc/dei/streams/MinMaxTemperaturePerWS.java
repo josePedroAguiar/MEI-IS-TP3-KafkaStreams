@@ -56,10 +56,10 @@ public class MinMaxTemperaturePerWS {
 
         // group the stream by location
 
-        KTable<String, Integer> maxTable = weatherStream
+        KTable<String, Double> maxTable = weatherStream
                 .groupByKey()
                 .aggregate(
-                        () -> Integer.MIN_VALUE, // Initialize the aggregation value with the
+                        () -> Double.MIN_VALUE, // Initialize the aggregation value with the
                                                  // minimum possible integer
                                                  // value
                         (key, value, aggregate) -> Math.max(toFahrenheit(value.getTemperature()), aggregate), // Use
@@ -71,8 +71,8 @@ public class MinMaxTemperaturePerWS {
                         // the
                         // maximum
                         // value
-                        Materialized.<String, Integer, KeyValueStore<Bytes, byte[]>>as(
-                                "max-store").withValueSerde(Serdes.Integer())// Materialize
+                        Materialized.<String, Double, KeyValueStore<Bytes, byte[]>>as(
+                                "max-store").withValueSerde(Serdes.Double())// Materialize
                                                                              // the
                                                                              // aggregation
                                                                              // results
@@ -83,10 +83,10 @@ public class MinMaxTemperaturePerWS {
                 );
 
         // Use the min aggregation function to calculate the minimum value in the stream
-        KTable<String, Integer> minTable = weatherStream
+        KTable<String, Double> minTable = weatherStream
                 .groupByKey()
                 .aggregate(
-                        () -> Integer.MAX_VALUE, // Initialize the aggregation value with the
+                        () -> Double.MAX_VALUE, // Initialize the aggregation value with the
                                                  // maximum possible integer
                                                  // value
                         (key, value, aggregate) -> Math.min(toFahrenheit(value.getTemperature()), aggregate), // Use
@@ -98,8 +98,8 @@ public class MinMaxTemperaturePerWS {
                         // the
                         // minimum
                         // value
-                        Materialized.<String, Integer, KeyValueStore<Bytes, byte[]>>as(
-                                "min-store").withValueSerde(Serdes.Integer()) // Materialize
+                        Materialized.<String, Double, KeyValueStore<Bytes, byte[]>>as(
+                                "min-store").withValueSerde(Serdes.Double()) // Materialize
                                                                               // the
                                                                               // aggregation
                                                                               // results
@@ -120,11 +120,10 @@ public class MinMaxTemperaturePerWS {
 
         // Start the Kafka Streams instance
         streams.start();
-
     }
 
-    public static int toFahrenheit(int temperature) {
-        return (((temperature * 9) / 5) + 32);
+    public static double toFahrenheit(int temperature) {
+        return (temperature * 1.8 + 32.0);
     }
 
 }
