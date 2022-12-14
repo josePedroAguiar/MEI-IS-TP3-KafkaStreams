@@ -111,7 +111,7 @@ public class MinMaxTemperaturePerLocation {
                 KStream<String, DoublePair> outputStream = maxTable
                                 .join(minTable, (max, min) -> new DoublePair(max, min)).toStream();*/
 
-                weatherStream.groupByKey()
+                weatherStream.groupBy((key, value) -> value.getLocation())
                                 .aggregate(() -> new int[]{9999, 0}, 
                                 (aggKey, newValue, aggValue) -> {
                                     aggValue[0]= Math.min(newValue.getTemperature(),aggValue[0]);

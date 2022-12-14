@@ -33,7 +33,7 @@ public class CombinedWeatherSerde
             
             return objectMapper.writeValueAsBytes(data);
         } catch (JsonProcessingException e) {
-            throw new SerializationException("Error serializing WeatherAlert object", e);
+            throw new SerializationException("Error serializing CombinedWeather object", e);
         }
     }
 
@@ -43,7 +43,7 @@ public class CombinedWeatherSerde
             System.out.println("Desserializing...");
             return objectMapper.readValue(data, CombinedWeather.class);
         } catch (IOException e) {
-            throw new SerializationException("Error deserializing WeatherAlert object", e);
+            throw new SerializationException("Error deserializing CombinedWeather object", e);
         }
     }
     @Override
