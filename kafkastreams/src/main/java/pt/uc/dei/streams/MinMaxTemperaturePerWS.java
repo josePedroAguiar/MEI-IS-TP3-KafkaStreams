@@ -116,8 +116,8 @@ public class MinMaxTemperaturePerWS {
         // Serdes.Integer()));
 
         */
-        weatherStream.groupByKey()
-        .aggregate(() -> new int[]{0, 0}, 
+        weatherStream.groupBy((key, value) -> value.getLocation())
+        .aggregate(() -> new int[]{999, 0}, 
         (aggKey, newValue, aggValue) -> {
             aggValue[0]= Math.min(newValue.getTemperature(),aggValue[0]);
             aggValue[1]= Math.max(newValue.getTemperature(),aggValue[1]);

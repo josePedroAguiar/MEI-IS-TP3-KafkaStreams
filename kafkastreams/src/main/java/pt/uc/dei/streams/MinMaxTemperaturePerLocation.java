@@ -56,7 +56,7 @@ public class MinMaxTemperaturePerLocation {
                 KStream<String, StandardWeather> weatherStream = builder.stream(inputTopic);
 
                 // group the stream by location
-
+/*
                 KTable<String, Integer> maxTable = weatherStream
                                 .groupBy((key, value) -> value.getLocation())
                                 .aggregate(
@@ -109,9 +109,22 @@ public class MinMaxTemperaturePerLocation {
                                 );
 
                 KStream<String, DoublePair> outputStream = maxTable
-                                .join(minTable, (max, min) -> new DoublePair(max, min)).toStream();
+                                .join(minTable, (max, min) -> new DoublePair(max, min)).toStream();*/
 
-                outputStream.to(outputTopic, Produced.with(Serdes.String(), serde));
+                weatherStream.groupByKey()
+                                .aggregate(() -> new int[]{9999, 0}, 
+                                (aggKey, newValue, aggValue) -> {
+                                    aggValue[0]= Math.min(newValue.getTemperature(),aggValue[0]);
+                                    aggValue[1]= Math.max(newValue.getTemperature(),aggValue[1]);
+                                        return aggValue;
+                                }
+                                , Materialized.with(Serdes.String(), new IntArraySerde()))
+                                .mapValues(v -> " Min:"+Integer.toString(v[0])+" Max:"+Integer.toString(v[1])).toStream()
+                                .to( outputTopic, Produced.with(Serdes.String(), Serdes.String()));
+                        
+                // Create the Kafka Streams instance
+                // KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfig);
+                //outputStream.to(outputTopic, Produced.with(Serdes.String(), serde));
                 // Write the result to the output topic
                 // minTable.toStream().to(outputTopic, Produced.with(Serdes.String(),
                 // Serdes.Integer()));
