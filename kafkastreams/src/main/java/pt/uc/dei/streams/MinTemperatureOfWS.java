@@ -92,6 +92,7 @@ public class MinTemperatureOfWS {
 
 
         ValueJoiner<String,String,String> valueJoiner=(leftValue,rightValue)->{
+            System.out.println(leftValue+rightValue);
             return leftValue+rightValue;
         };
         filteredStream1.join(inputStream2,valueJoiner,JoinWindows.of(Duration.ofSeconds(10)));
