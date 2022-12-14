@@ -30,6 +30,7 @@ import org.apache.kafka.streams.kstream.KGroupedStream;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.ValueJoiner;
 
 import pt.uc.dei.Serializer.StandardWeather;
 import pt.uc.dei.Serializer.WeatherAlert;
@@ -76,34 +77,26 @@ public class MinTemperatureOfWS {
         KStream<String, WeatherAlert> inputStream1 = builder1.stream(inputTopic1,
                 Consumed.with(Serdes.String(), new WeatherAlertSerde()));
 
-        KStream<String, WeatherAlert> filteredStream1 = inputStream1
+        KStream<String, String> filteredStream1 = inputStream1
                 // Filter out events that do not have a red alert
-                .filter((key, value) -> value.getType().equals("red"))
+                .filter((key, value) -> value.getType().equals("red")).mapValues(v->v.toString())
                 
                 ;
-        filteredStream1.mapValues((key,value) -> {
-            System.out.println(value.getType() + " "+ value.getLocation());
-            return 1;
-        });
 
-        KTable<String, Long> filteredStream0 = filteredStream1.groupByKey().count();
+
 
         // Read the input topic as a stream of messages
-        KStream<String, StandardWeather> inputStream2 = builder1.stream(inputTopic2,
-        Consumed.with(Serdes.String(), new StandardWeatherSerde()));
+        KStream<String, String> inputStream2 = builder1.stream(inputTopic2,
+        Consumed.with(Serdes.String(), new StandardWeatherSerde())).mapValues(v->v.toString())
+        ;
 
-        KStream<String, StandardWeather> filteredStream2 = inputStream2
-        .join(filteredStream0,
-              (value1, value2) -> value1,
-              Joined.with(Serdes.String(), new StandardWeatherSerde(), Serdes.Long())
-        );
 
-        filteredStream2.mapValues((key,value) -> 
-        { System.out.println(value.getTemperature() + " "+ value.getLocation());return Integer.toString(value.getTemperature()) + value.getLocation();});
+        ValueJoiner<String,String,String> valueJoiner=(leftValue,rightValue)->{
+            return leftValue+rightValue;
+        };
+        inputStream1.join(inputStream2,valueJoiner,JoinWindows.of(Duration.ofSeconds(10)));
 
-        
-        // Write the output to the specified output topic
-        filteredStream2.to(outputFinal, Produced.with(Serdes.String(), new StandardWeatherSerde()));
+    
 
         KafkaStreams streams1 = new KafkaStreams(builder1.build(), props1);
         streams1.start();
