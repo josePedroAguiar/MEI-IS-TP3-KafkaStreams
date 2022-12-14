@@ -59,7 +59,7 @@ public class SimpleProducer {
         Random r = new Random();
         ObjectMapper mapper = new ObjectMapper();
 
-        if (topicName.equals("standard-weather12")) {
+        if (topicName.equals("standard-weather13")) {
             props.put("value.serializer", StandardWeatherSerde.class.getName());
 
             Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
@@ -95,7 +95,7 @@ public class SimpleProducer {
             producer.close();
 
         }
-        else if (topicName.equals("weather-alert12")) {
+        else if (topicName.equals("weather-alert13")) {
             props.put("value.serializer", WeatherAlertSerde.class.getName());
 
             //Producer<String, String> producer = new KafkaProducer<>(props);
