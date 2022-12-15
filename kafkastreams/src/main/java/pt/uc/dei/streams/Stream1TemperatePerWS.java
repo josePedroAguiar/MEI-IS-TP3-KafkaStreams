@@ -55,7 +55,7 @@ public class Stream1TemperatePerWS {
         KTable<String, Long> temperatureReadingsCount = temperatureReadingsGroupedByWeatherStation.count();
 
         // Write the result to the output topic
-        temperatureReadingsCount.toStream().to(outputTopic, Produced.with(Serdes.String(), Serdes.Long()));
+        temperatureReadingsCount.toStream().mapValues(v->Long.toString(v)).to(outputTopic, Produced.with(Serdes.String(), Serdes.String()));
 
         // Create the Kafka Streams instance
         KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfig);
