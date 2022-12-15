@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.File; // Import the File class
+import java.io.FileWriter;
+import java.io.IOException; // Import the IOException class to handle errors
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -23,13 +27,25 @@ import pt.uc.dei.Serializer.WeatherAlertSerde;
 
 public class SimpleProducer {
 
+    static final String[] topics = { "standard-weather-113", "weather-alert-113" };
+    static final List<String> topicNames = Arrays.asList(topics);
+
+    static final String[] al = { "Distrito de Beja", "Distrito de Évora", "Distrito de Santarém",
+            "Distrito de Castelo Branco", "Distrito de Bragança", "Distrito de Portalegre",
+            "Distrito da Guarda", "Distrito de Setúbal", "Distrito de Viseu", "Distrito de Faro",
+            "Distrito de Vila Real", "Distrito de Coimbra", "Distrito de Leiria", "Distrito de Aveiro",
+            "Distrito de Lisboa", "Distrito de Braga", "Distrito do Porto", "Região Autónoma dos Açores",
+            "Distrito de Viana do Castelo", "Região Autónoma da Madeira" };
+
+    static final String[] flag = { "red", "green" };
+
+    static Random r = new Random();
+    static WriteFiles filewriter=new WriteFiles();
+
     public static void main(String[] args) throws Exception { // Assign topicName to string variable
-
-        String topicName = args[0].toString();
-
-        // create instance for properties to access producer configs
+        String topicName;
         Properties props = new Properties(); // Assign localhost id
-        
+
         props.put("bootstrap.servers", "broker1:9092");
         // Set acknowledgements for producer requests. props.put("acks", "all");
         // If the request fails, the producer can automatically retry,
@@ -42,100 +58,97 @@ public class SimpleProducer {
         // producer for buffering.
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        //props.put("value.serializer", StandardWeatherSerde.class.getName());
-        //props.put("value.serializer", WeatherAlertSerde.class.getName());
 
-        /*
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
-        props.put(ProducerConfig.RETRIES_CONFIG, 0);
-        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
-        props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
-        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-        "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-        "io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer");
-        */
-        Random r = new Random();
-        ObjectMapper mapper = new ObjectMapper();
-
-        if (topicName.equals("standard-weather13")) {
-            props.put("value.serializer", StandardWeatherSerde.class.getName());
-
-            Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
-
-            for (int i = 0; i < 10; i++) {
-
-                String[] a = { "Distrito de Beja", "Distrito de Évora", "Distrito de Santarém",
-                        "Distrito de Castelo Branco", "Distrito de Bragança", "Distrito de Portalegre",
-                        "Distrito da Guarda", "Distrito de Setúbal", "Distrito de Viseu", "Distrito de Faro",
-                        "Distrito de Vila Real", "Distrito de Coimbra", "Distrito de Leiria", "Distrito de Aveiro",
-                        "Distrito de Lisboa", "Distrito de Braga", "Distrito do Porto", "Região Autónoma dos Açores",
-                        "Distrito de Viana do Castelo", "Região Autónoma da Madeira" };
-                List<String> list = Arrays.asList(a);
-                //JSONObject user = new JSONObject();
-
-                int pos = r.nextInt(list.size());
-                //String[] condition = { "fog", "rain", "snow", "hail" };
-                //List<String> list1 = Arrays.asList(condition);
-                //int pos1 = r.nextInt(list1.size());
-
-                StandardWeather user = new StandardWeather(r.nextInt(50) - 10, list.get(pos));
-                //JsonNode node = mapper.valueToTree(user);
-                //user.put("atmospheric condition",list1.get(pos1));
-                //user.put("temperature", r.nextInt(40));
-                //user.put("location",list.get(pos) );
-                int key = pos % 4;
-                System.out.println("Key: " + Integer.toString(key) + " Temperature: "+ user.getTemperature()+" Location: "+ user.getLocation() );
-                producer.send(
-                        new ProducerRecord<String,StandardWeather>(topicName, Integer.toString(key), user));
-                if (i % 100 == 0)
-                    System.out.println("Sending message " + (i + 1) + " to topic " + topicName);
-            }
-            producer.close();
-
+        if (args.length == 1) {
+            System.out.println(
+                    "-------------------------------------------------------\n\t\t:)\n------------------------------------------------------");
+            String topic = args[0].toString();
+            createContentTopic(props, topic);
         }
-        else if (topicName.equals("weather-alert13")) {
-            props.put("value.serializer", WeatherAlertSerde.class.getName());
 
-            //Producer<String, String> producer = new KafkaProducer<>(props);
-            Producer<String, WeatherAlert> producer = new KafkaProducer<>(props);
+        else if (args.length == 2) {
+            System.out.println(
+                    "-------------------------------------------------------\n\t\t:(\n------------------------------------------------------");
+            String topic = args[0].toString();
 
-            for (int i = 0; i < 10; i++) {
+            if (topic.equals("standard")) {
+                topicName = args[1].toString();
+                ;
+                createStandardWeather(topicName, props);
 
-                String[] a = { "Distrito de Beja", "Distrito de Évora", "Distrito de Santarém",
-                        "Distrito de Castelo Branco", "Distrito de Bragança", "Distrito de Portalegre",
-                        "Distrito da Guarda", "Distrito de Setúbal", "Distrito de Viseu", "Distrito de Faro",
-                        "Distrito de Vila Real", "Distrito de Coimbra", "Distrito de Leiria", "Distrito de Aveiro",
-                        "Distrito de Lisboa", "Distrito de Braga", "Distrito do Porto", "Região Autónoma dos Açores",
-                        "Distrito de Viana do Castelo", "Região Autónoma da Madeira" };
-                List<String> list = Arrays.asList(a);
-                System.out.println(list.size());
-                //JSONObject user = new JSONObject();
-                int pos = r.nextInt(list.size());
+            } else if (topic.equals("alert")) {
+                topicName = args[1].toString();
+                ;
+                createAlertEvent(topicName, props);
 
-                String[] flag = { "red", "green" };
-                int f = r.nextInt(2);
-                String[] condition = { "hunderstorms", "hurricanes", "blizzards", "droughts" };
-                List<String> list1 = Arrays.asList(condition);
-                int pos1 = r.nextInt(list1.size());
+            } else {
+                System.out.println("ERRO: First Agument is invalid: try run:\n" +
+                        "/usr/bin/env /usr/java/openjdk-18/bin/java @/tmp/cp_56nelkrk30b1jpsm5hfdywsn.argfile pt.uc.dei.SimpleProducer %{alert,standard} %topicName");
+                return;
+            }
+        }
 
-                //user.put("atmospheric condition",list1.get(pos1));
-                //user.put("flag",flag[f] );
-                //user.put("location",list.get(pos) );
-
-                WeatherAlert user = new WeatherAlert(flag[f], list.get(pos));
-                //JsonNode node = mapper.valueToTree(user);
-                int key = pos % 4;
-                System.out.println("Key: " + Integer.toString(key) + " type: "+ user.getType()+" Location: "+ user.getLocation() );
-
-                producer.send(new ProducerRecord<String, WeatherAlert>(topicName, Integer.toString((key)), user));
-                if (i % 100 == 0)
-                    System.out.println("Sending message " + (i + 1) + " to topic " + topicName);
+        else {
+            System.out.println(
+                    "-------------------------------------------------------\n\t\t-_-\n------------------------------------------------------");
+            for (String topic : topicNames) {
+                topicName = topic;
+                if (topicName.equals(topics[0])) {
+                    createStandardWeather(topicName, props);
+                } else {
+                    createAlertEvent(topicName, props);
+                }
 
             }
-            producer.close();
 
         }
     }
+
+    static void createStandardWeather(String topicName, Properties props) {
+        props.put("value.serializer", StandardWeatherSerde.class.getName());
+
+        Producer<String, StandardWeather> producer = new KafkaProducer<>(props);
+        for (int i = 0; i < 10; i++) {
+            int pos = r.nextInt(al.length);
+            int key = (pos*4) % 4;
+            StandardWeather user = new StandardWeather(r.nextInt(50) - 10, al[pos]);
+            String out = "Key: " + Integer.toString(key) + " Temperature: " + user.getTemperature()
+                    + " Location: " + user.getLocation()+"\n";
+            System.out.println(out);
+            filewriter.writeToFile("Producer_" + topicName + "s.txt", out);
+            producer.send(
+                    new ProducerRecord<String, StandardWeather>(topicName, Integer.toString(key), user));
+
+        }
+        producer.close();
+    }
+
+    static void createAlertEvent(String topicName, Properties props) {
+        props.put("value.serializer", WeatherAlertSerde.class.getName());
+        Producer<String, WeatherAlert> producer = new KafkaProducer<>(props);
+        for (int i = 0; i < 10; i++) {
+            int key = r.nextInt(al.length * 4);
+            int pos = key%4;
+            WeatherAlert user = new WeatherAlert(flag[r.nextInt(2)], al[pos]);
+            String out = "Key: " + Integer.toString(key) + " type: " + user.getType() + " Location: "
+                    + user.getLocation()+"\n";
+            System.out.println(out);
+            filewriter.writeToFile("Producer_" + topicName + "s.txt", out);
+            producer.send(new ProducerRecord<String, WeatherAlert>(topicName, Integer.toString(key), user));
+        }
+        producer.close();
+    }
+
+    static public void createContentTopic(Properties props, String topic) {
+        if (topic.equals("standard")) {
+            String topicName = topics[0];
+            createStandardWeather(topicName, props);
+
+        } else if (topic.equals("alert")) {
+            String topicName = topics[1];
+            createAlertEvent(topicName, props);
+
+        }
+    }
+
 }

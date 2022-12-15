@@ -1,0 +1,9 @@
+Região Autónoma dos Açores => 18
+Distrito de Portalegre => 26
+Distrito de Évora => 36
+Distrito de Leiria => -5
+Distrito de Bragança => 38
+Distrito de Vila Real => -3
+Distrito de Santarém => 21
+Distrito de Coimbra => 7
+

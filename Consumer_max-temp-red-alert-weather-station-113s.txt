@@ -1,0 +1,8 @@
+Distrito de Portalegre => 27
+Distrito de Faro => 29
+Região Autónoma dos Açores => 9
+Distrito da Guarda => 21
+Distrito de Leiria => 7
+Distrito de Bragança => -4
+Distrito de Castelo Branco => 38
+Região Autónoma da Madeira => 38
