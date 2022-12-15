@@ -8,3 +8,273 @@ Key: 3 Temperature: 38 Location: Região Autónoma da Madeira
 Key: 1 Temperature: 7 Location: Distrito de Faro
 Key: 2 Temperature: 21 Location: Distrito da Guarda
 Key: 1 Temperature: 9 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 28 Location: Distrito de Portalegre
+Key: 0 Temperature: 21 Location: Distrito de Aveiro
+Key: 0 Temperature: 16 Location: Distrito de Leiria
+Key: 0 Temperature: -9 Location: Distrito de Vila Real
+Key: 0 Temperature: 3 Location: Distrito de Lisboa
+Key: 0 Temperature: 21 Location: Distrito de Santarém
+Key: 0 Temperature: 11 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 25 Location: Distrito do Porto
+Key: 0 Temperature: 14 Location: Distrito de Coimbra
+Key: 0 Temperature: 30 Location: Distrito do Porto
+Key: 0 Temperature: -1 Location: Distrito de Viseu
+Key: 0 Temperature: 29 Location: Distrito de Bragança
+Key: 0 Temperature: 8 Location: Distrito de Évora
+Key: 0 Temperature: 12 Location: Distrito de Leiria
+Key: 0 Temperature: 22 Location: Distrito de Beja
+Key: 0 Temperature: 30 Location: Distrito de Aveiro
+Key: 0 Temperature: 23 Location: Distrito de Évora
+Key: 0 Temperature: -1 Location: Distrito de Braga
+Key: 0 Temperature: 32 Location: Distrito de Bragança
+Key: 0 Temperature: 37 Location: Distrito de Beja
+Key: 0 Temperature: 37 Location: Distrito de Santarém
+Key: 0 Temperature: -3 Location: Distrito de Coimbra
+Key: 0 Temperature: -5 Location: Distrito de Viseu
+Key: 0 Temperature: 37 Location: Distrito de Vila Real
+Key: 0 Temperature: -4 Location: Distrito de Castelo Branco
+Key: 0 Temperature: -2 Location: Distrito de Viseu
+Key: 0 Temperature: 19 Location: Distrito de Lisboa
+Key: 0 Temperature: 39 Location: Distrito de Beja
+Key: 0 Temperature: 29 Location: Distrito de Évora
+Key: 0 Temperature: 33 Location: Distrito da Guarda
+Key: 0 Temperature: 24 Location: Distrito de Portalegre
+Key: 0 Temperature: 15 Location: Distrito de Braga
+Key: 0 Temperature: 19 Location: Distrito de Viseu
+Key: 0 Temperature: 25 Location: Distrito de Faro
+Key: 0 Temperature: -5 Location: Distrito de Bragança
+Key: 0 Temperature: 0 Location: Distrito de Aveiro
+Key: 0 Temperature: 6 Location: Distrito de Portalegre
+Key: 0 Temperature: 24 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 22 Location: Distrito de Coimbra
+Key: 0 Temperature: 18 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 2 Location: Distrito de Évora
+Key: 0 Temperature: 23 Location: Distrito de Santarém
+Key: 0 Temperature: -9 Location: Distrito de Vila Real
+Key: 0 Temperature: 19 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 23 Location: Distrito de Leiria
+Key: 0 Temperature: 17 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 11 Location: Distrito de Setúbal
+Key: 0 Temperature: 11 Location: Distrito da Guarda
+Key: 0 Temperature: -3 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 5 Location: Distrito de Vila Real
+Key: 0 Temperature: 31 Location: Distrito de Vila Real
+Key: 0 Temperature: -8 Location: Distrito do Porto
+Key: 0 Temperature: 5 Location: Distrito do Porto
+Key: 0 Temperature: 32 Location: Distrito de Vila Real
+Key: 0 Temperature: 1 Location: Distrito de Portalegre
+Key: 0 Temperature: -7 Location: Região Autónoma da Madeira
+Key: 0 Temperature: -10 Location: Distrito de Braga
+Key: 0 Temperature: 7 Location: Distrito de Portalegre
+Key: 0 Temperature: -4 Location: Distrito de Beja
+Key: 0 Temperature: 30 Location: Distrito de Setúbal
+Key: 0 Temperature: 11 Location: Distrito de Viseu
+Key: 0 Temperature: 14 Location: Distrito de Setúbal
+Key: 0 Temperature: 32 Location: Distrito de Setúbal
+Key: 0 Temperature: -5 Location: Distrito da Guarda
+Key: 0 Temperature: 0 Location: Distrito de Aveiro
+Key: 0 Temperature: 34 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 15 Location: Distrito de Vila Real
+Key: 0 Temperature: -1 Location: Distrito de Lisboa
+Key: 0 Temperature: 0 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 34 Location: Distrito de Évora
+Key: 0 Temperature: -9 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 34 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 9 Location: Distrito de Leiria
+Key: 0 Temperature: 35 Location: Distrito de Vila Real
+Key: 0 Temperature: -5 Location: Distrito de Viseu
+Key: 0 Temperature: 17 Location: Distrito de Viseu
+Key: 0 Temperature: 5 Location: Distrito da Guarda
+Key: 0 Temperature: 15 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 6 Location: Distrito de Santarém
+Key: 0 Temperature: 9 Location: Distrito de Faro
+Key: 0 Temperature: 22 Location: Distrito de Viseu
+Key: 0 Temperature: 16 Location: Distrito de Faro
+Key: 0 Temperature: 20 Location: Distrito de Portalegre
+Key: 0 Temperature: 39 Location: Distrito de Bragança
+Key: 0 Temperature: -1 Location: Distrito de Faro
+Key: 0 Temperature: 35 Location: Distrito de Beja
+Key: 0 Temperature: -2 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 32 Location: Distrito de Vila Real
+Key: 0 Temperature: 0 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 14 Location: Distrito de Setúbal
+Key: 0 Temperature: 23 Location: Distrito de Vila Real
+Key: 0 Temperature: 17 Location: Região Autónoma da Madeira
+Key: 0 Temperature: -2 Location: Distrito do Porto
+Key: 0 Temperature: 4 Location: Distrito de Setúbal
+Key: 0 Temperature: 7 Location: Distrito de Bragança
+Key: 0 Temperature: -5 Location: Distrito de Bragança
+Key: 0 Temperature: -5 Location: Distrito de Santarém
+Key: 0 Temperature: 28 Location: Distrito de Portalegre
+Key: 0 Temperature: 35 Location: Distrito de Braga
+Key: 0 Temperature: 18 Location: Região Autónoma da Madeira
+Key: 0 Temperature: -8 Location: Distrito de Coimbra
+Key: 0 Temperature: -5 Location: Distrito de Vila Real
+Key: 0 Temperature: 15 Location: Distrito de Coimbra
+Key: 0 Temperature: -7 Location: Distrito de Leiria
+Key: 0 Temperature: 1 Location: Distrito de Setúbal
+Key: 0 Temperature: -8 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 22 Location: Distrito de Bragança
+Key: 0 Temperature: 29 Location: Distrito da Guarda
+Key: 0 Temperature: 19 Location: Distrito da Guarda
+Key: 0 Temperature: 18 Location: Distrito de Faro
+Key: 0 Temperature: 29 Location: Distrito de Beja
+Key: 0 Temperature: 7 Location: Distrito de Braga
+Key: 0 Temperature: 11 Location: Distrito de Portalegre
+Key: 0 Temperature: 17 Location: Distrito de Portalegre
+Key: 0 Temperature: -3 Location: Distrito de Braga
+Key: 0 Temperature: 24 Location: Distrito de Aveiro
+Key: 0 Temperature: 16 Location: Distrito de Évora
+Key: 0 Temperature: 25 Location: Distrito de Lisboa
+Key: 0 Temperature: 39 Location: Região Autónoma da Madeira
+Key: 0 Temperature: -10 Location: Distrito do Porto
+Key: 0 Temperature: 39 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 1 Location: Distrito de Coimbra
+Key: 0 Temperature: 37 Location: Distrito de Portalegre
+Key: 0 Temperature: 29 Location: Distrito de Lisboa
+Key: 0 Temperature: 25 Location: Distrito de Coimbra
+Key: 0 Temperature: -6 Location: Distrito de Aveiro
+Key: 0 Temperature: 15 Location: Distrito de Viseu
+Key: 0 Temperature: -1 Location: Distrito de Vila Real
+Key: 0 Temperature: 28 Location: Distrito de Lisboa
+Key: 0 Temperature: 6 Location: Distrito de Faro
+Key: 0 Temperature: 19 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 29 Location: Região Autónoma dos Açores
+Key: 0 Temperature: -1 Location: Distrito de Coimbra
+Key: 0 Temperature: 22 Location: Distrito do Porto
+Key: 0 Temperature: 23 Location: Distrito de Setúbal
+Key: 0 Temperature: -8 Location: Distrito de Faro
+Key: 0 Temperature: 29 Location: Distrito de Lisboa
+Key: 0 Temperature: 34 Location: Distrito de Lisboa
+Key: 0 Temperature: 3 Location: Distrito de Faro
+Key: 0 Temperature: 32 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 18 Location: Distrito de Bragança
+Key: 0 Temperature: 33 Location: Distrito de Coimbra
+Key: 0 Temperature: -6 Location: Distrito de Bragança
+Key: 0 Temperature: 4 Location: Distrito de Lisboa
+Key: 0 Temperature: 29 Location: Distrito de Coimbra
+Key: 0 Temperature: 25 Location: Distrito de Braga
+Key: 0 Temperature: 17 Location: Distrito da Guarda
+Key: 0 Temperature: -2 Location: Distrito de Évora
+Key: 0 Temperature: 16 Location: Distrito de Vila Real
+Key: 0 Temperature: 29 Location: Distrito da Guarda
+Key: 0 Temperature: 30 Location: Distrito de Viseu
+Key: 0 Temperature: 4 Location: Distrito de Santarém
+Key: 0 Temperature: 8 Location: Distrito de Bragança
+Key: 0 Temperature: 19 Location: Distrito de Faro
+Key: 0 Temperature: 27 Location: Distrito de Faro
+Key: 0 Temperature: -4 Location: Distrito de Aveiro
+Key: 0 Temperature: 23 Location: Distrito de Bragança
+Key: 0 Temperature: -8 Location: Distrito de Portalegre
+Key: 0 Temperature: 37 Location: Distrito de Lisboa
+Key: 0 Temperature: 7 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 17 Location: Distrito de Leiria
+Key: 0 Temperature: 38 Location: Distrito de Setúbal
+Key: 0 Temperature: -4 Location: Distrito de Bragança
+Key: 0 Temperature: 16 Location: Distrito de Santarém
+Key: 0 Temperature: 12 Location: Distrito de Aveiro
+Key: 0 Temperature: -5 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 5 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 24 Location: Distrito de Coimbra
+Key: 0 Temperature: 21 Location: Distrito de Coimbra
+Key: 0 Temperature: 27 Location: Distrito de Santarém
+Key: 0 Temperature: 31 Location: Distrito de Leiria
+Key: 0 Temperature: -4 Location: Distrito de Aveiro
+Key: 0 Temperature: 15 Location: Distrito de Castelo Branco
+Key: 0 Temperature: -8 Location: Distrito da Guarda
+Key: 0 Temperature: 13 Location: Distrito de Évora
+Key: 0 Temperature: 35 Location: Distrito da Guarda
+Key: 0 Temperature: 12 Location: Distrito de Vila Real
+Key: 0 Temperature: 14 Location: Distrito de Leiria
+Key: 0 Temperature: -3 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 1 Location: Distrito de Bragança
+Key: 0 Temperature: -2 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: -2 Location: Distrito de Viseu
+Key: 0 Temperature: 0 Location: Distrito da Guarda
+Key: 0 Temperature: 31 Location: Distrito do Porto
+Key: 0 Temperature: 23 Location: Distrito de Setúbal
+Key: 0 Temperature: 34 Location: Distrito de Faro
+Key: 0 Temperature: 11 Location: Distrito de Viseu
+Key: 0 Temperature: 20 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 20 Location: Distrito de Évora
+Key: 0 Temperature: 32 Location: Distrito de Santarém
+Key: 0 Temperature: -2 Location: Distrito da Guarda
+Key: 0 Temperature: 30 Location: Distrito de Faro
+Key: 0 Temperature: 37 Location: Região Autónoma da Madeira
+Key: 0 Temperature: 17 Location: Distrito de Aveiro
+Key: 0 Temperature: -8 Location: Distrito de Bragança
+Key: 0 Temperature: 8 Location: Distrito de Beja
+Key: 0 Temperature: 2 Location: Distrito de Santarém
+Key: 0 Temperature: 25 Location: Distrito de Vila Real
+Key: 0 Temperature: 25 Location: Distrito de Setúbal
+Key: 0 Temperature: -6 Location: Distrito de Aveiro
+Key: 0 Temperature: 29 Location: Distrito de Leiria
+Key: 0 Temperature: 14 Location: Distrito de Braga
+Key: 0 Temperature: 33 Location: Distrito de Coimbra
+Key: 0 Temperature: 34 Location: Distrito de Aveiro
+Key: 0 Temperature: -10 Location: Distrito de Braga
+Key: 0 Temperature: 26 Location: Região Autónoma da Madeira
+Key: 0 Temperature: -5 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: -5 Location: Distrito de Braga
+Key: 0 Temperature: 0 Location: Distrito de Beja
+Key: 0 Temperature: 23 Location: Distrito de Setúbal
+Key: 0 Temperature: 18 Location: Distrito de Lisboa
+Key: 0 Temperature: 30 Location: Distrito de Évora
+Key: 0 Temperature: 29 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 1 Location: Distrito de Santarém
+Key: 0 Temperature: 30 Location: Distrito de Lisboa
+Key: 0 Temperature: 38 Location: Distrito de Faro
+Key: 0 Temperature: 23 Location: Distrito de Évora
+Key: 0 Temperature: 30 Location: Distrito de Coimbra
+Key: 0 Temperature: 39 Location: Distrito de Lisboa
+Key: 0 Temperature: 27 Location: Distrito de Beja
+Key: 0 Temperature: 24 Location: Distrito do Porto
+Key: 0 Temperature: -2 Location: Distrito do Porto
+Key: 0 Temperature: 23 Location: Distrito de Faro
+Key: 0 Temperature: 1 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 16 Location: Distrito de Setúbal
+Key: 0 Temperature: 18 Location: Distrito de Lisboa
+Key: 0 Temperature: 16 Location: Distrito de Portalegre
+Key: 0 Temperature: -5 Location: Distrito de Vila Real
+Key: 0 Temperature: 35 Location: Distrito de Setúbal
+Key: 0 Temperature: 36 Location: Distrito de Beja
+Key: 0 Temperature: 16 Location: Distrito de Évora
+Key: 0 Temperature: 14 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 14 Location: Distrito da Guarda
+Key: 0 Temperature: 35 Location: Distrito de Lisboa
+Key: 0 Temperature: 14 Location: Distrito de Vila Real
+Key: 0 Temperature: -1 Location: Distrito de Viseu
+Key: 0 Temperature: 30 Location: Distrito de Lisboa
+Key: 0 Temperature: 11 Location: Distrito de Faro
+Key: 0 Temperature: -5 Location: Distrito de Setúbal
+Key: 0 Temperature: 34 Location: Distrito de Bragança
+Key: 0 Temperature: -5 Location: Região Autónoma dos Açores
+Key: 0 Temperature: 8 Location: Distrito de Leiria
+Key: 0 Temperature: 29 Location: Distrito da Guarda
+Key: 0 Temperature: 0 Location: Distrito de Santarém
+Key: 0 Temperature: -2 Location: Distrito de Braga
+Key: 0 Temperature: 3 Location: Distrito de Évora
+Key: 0 Temperature: 39 Location: Região Autónoma dos Açores
+Key: 0 Temperature: -1 Location: Distrito de Beja
+Key: 0 Temperature: 27 Location: Distrito de Setúbal
+Key: 0 Temperature: 16 Location: Distrito de Vila Real
+Key: 0 Temperature: 33 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 29 Location: Distrito de Coimbra
+Key: 0 Temperature: -2 Location: Distrito de Lisboa
+Key: 0 Temperature: -7 Location: Distrito de Braga
+Key: 0 Temperature: 22 Location: Distrito de Castelo Branco
+Key: 0 Temperature: 39 Location: Distrito de Coimbra
+Key: 0 Temperature: 5 Location: Distrito de Lisboa
+Key: 0 Temperature: -2 Location: Distrito de Setúbal
+Key: 0 Temperature: 22 Location: Distrito de Lisboa
+Key: 0 Temperature: 4 Location: Distrito de Bragança
+Key: 0 Temperature: -6 Location: Distrito do Porto
+Key: 0 Temperature: 34 Location: Distrito de Viana do Castelo
+Key: 0 Temperature: 1 Location: Distrito de Aveiro
+Key: 0 Temperature: 14 Location: Distrito de Beja
+Key: 0 Temperature: 14 Location: Distrito de Santarém
+Key: 0 Temperature: 34 Location: Distrito de Beja
+Key: 0 Temperature: 31 Location: Distrito de Faro
+Key: 0 Temperature: 10 Location: Distrito de Vila Real
+Key: 0 Temperature: 19 Location: Distrito de Beja
+Key: 0 Temperature: 0 Location: Distrito de Aveiro

@@ -29,7 +29,7 @@ public class StandardWeatherSerde
     @Override
     public byte[] serialize(String topic, StandardWeather data) {
         try {
-            System.out.println("Serializing...");
+           // System.out.println("Serializing...");
             
             return objectMapper.writeValueAsBytes(data);
         } catch (JsonProcessingException e) {
@@ -40,7 +40,7 @@ public class StandardWeatherSerde
     @Override
     public StandardWeather deserialize(String topic, byte[] data) {
         try {
-            System.out.println("Desserializing...");
+           // System.out.println("Desserializing...");
             return objectMapper.readValue(data, StandardWeather.class);
         } catch (IOException e) {
             throw new SerializationException("Error deserializing StandardWeather object", e);

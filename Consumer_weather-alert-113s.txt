@@ -1,0 +1,10 @@
+15 => {"type":"green","location":"Distrito de Castelo Branco"}
+38 => {"type":"green","location":"Distrito de Santarém"}
+34 => {"type":"green","location":"Distrito de Santarém"}
+25 => {"type":"red","location":"Distrito de Évora"}
+75 => {"type":"green","location":"Distrito de Castelo Branco"}
+44 => {"type":"green","location":"Distrito de Beja"}
+53 => {"type":"green","location":"Distrito de Évora"}
+24 => {"type":"red","location":"Distrito de Beja"}
+27 => {"type":"red","location":"Distrito de Castelo Branco"}
+38 => {"type":"red","location":"Distrito de Santarém"}

@@ -48,11 +48,7 @@ import pt.uc.dei.Serializer.StandardWeatherSerde;
 public class Stream7MinTemperatureOfWS {
         public static void main(String[] args) throws InterruptedException, IOException {
 
-                if (args.length != 2) {
-                        System.err.println("Wrong arguments. Please run the class as follows:");
-                        System.err.println(SimpleStreamsExercisesa.class.getName() + " input-topic output-topic");
-                        System.exit(1);
-                }
+              
                 // Create a Kafka Streams configuration object
                 Properties props1 = new Properties();
                 props1.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-b");
@@ -68,9 +64,9 @@ public class Stream7MinTemperatureOfWS {
                 props2.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class.getName());
 
                 // Set up input and output topics
-                String inputTopic1 = "weather-alert13";
+                String inputTopic1 = "weather-alert-113";
 
-                String inputTopic2 = "standard-weather13";
+                String inputTopic2 = "standard-weather-113";
 
                 String outputFinal = "min-temp-red-alert-weather-station";
 

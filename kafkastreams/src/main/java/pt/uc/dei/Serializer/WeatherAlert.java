@@ -5,9 +5,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 
 public class WeatherAlert {
-    @JsonProperty
     String type;
-    @JsonProperty
     String location;
 
     public WeatherAlert() {}
