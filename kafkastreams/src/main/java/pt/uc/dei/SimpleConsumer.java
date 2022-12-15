@@ -92,7 +92,9 @@ public class SimpleConsumer {
                 Duration d = Duration.ofSeconds(1000000);
                 ConsumerRecords<String, String> records = consumer.poll(d);
                 for (ConsumerRecord<String, String> record : records) {
-                    System.out.println(record.key() + " => " + record.value()); 
+                    String out= record.key() + " => " + record.value()+"\n";
+                    System.out.println(out);
+                    WriteFiles.writeToFile("Consumer_" + topicName + "s.txt", out); 
                 }
                 return;
             }    

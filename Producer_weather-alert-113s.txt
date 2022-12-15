@@ -1,0 +1,10 @@
+Key: 1 type: green Location: Distrito de Portalegre
+Key: 1 type: red Location: Distrito de Aveiro
+Key: 2 type: green Location: Distrito de Vila Real
+Key: 2 type: green Location: Distrito da Guarda
+Key: 2 type: red Location: Distrito de Viana do Castelo
+Key: 2 type: red Location: Distrito de Vila Real
+Key: 1 type: red Location: Distrito de Aveiro
+Key: 2 type: green Location: Distrito de Santarém
+Key: 0 type: red Location: Distrito de Leiria
+Key: 3 type: red Location: Distrito de Braga

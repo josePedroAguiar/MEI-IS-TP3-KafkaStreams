@@ -1,0 +1,10 @@
+Key: 0 Temperature: 7 Location: Distrito de Leiria
+Key: 0 Temperature: -4 Location: Distrito de Bragança
+Key: 3 Temperature: 38 Location: Distrito de Castelo Branco
+Key: 1 Temperature: 27 Location: Distrito de Portalegre
+Key: 1 Temperature: 29 Location: Distrito de Faro
+Key: 1 Temperature: -10 Location: Distrito de Portalegre
+Key: 3 Temperature: 38 Location: Região Autónoma da Madeira
+Key: 1 Temperature: 7 Location: Distrito de Faro
+Key: 2 Temperature: 21 Location: Distrito da Guarda
+Key: 1 Temperature: 9 Location: Região Autónoma dos Açores
