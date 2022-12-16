@@ -48,3 +48,23 @@ Key: 3 type: green Location: Região Autónoma da Madeira
 Key: 0 type: red Location: Distrito de Beja
 Key: 2 type: green Location: Distrito da Guarda
 Key: 3 type: green Location: Região Autónoma da Madeira
+Key: 47 type: red Location: Distrito de Castelo Branco
+Key: 72 type: red Location: Distrito de Beja
+Key: 64 type: green Location: Distrito de Beja
+Key: 68 type: green Location: Distrito de Beja
+Key: 71 type: red Location: Distrito de Castelo Branco
+Key: 75 type: green Location: Distrito de Castelo Branco
+Key: 51 type: red Location: Distrito de Castelo Branco
+Key: 9 type: red Location: Distrito de Évora
+Key: 23 type: red Location: Distrito de Castelo Branco
+Key: 73 type: red Location: Distrito de Évora
+Key: 60 type: green Location: Distrito de Beja
+Key: 73 type: red Location: Distrito de Évora
+Key: 74 type: green Location: Distrito de Santarém
+Key: 77 type: green Location: Distrito de Évora
+Key: 67 type: green Location: Distrito de Castelo Branco
+Key: 51 type: green Location: Distrito de Castelo Branco
+Key: 51 type: green Location: Distrito de Castelo Branco
+Key: 12 type: green Location: Distrito de Beja
+Key: 60 type: red Location: Distrito de Beja
+Key: 46 type: green Location: Distrito de Santarém

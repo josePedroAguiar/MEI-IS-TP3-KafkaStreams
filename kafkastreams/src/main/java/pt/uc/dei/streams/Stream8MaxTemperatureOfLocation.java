@@ -61,11 +61,11 @@ public class Stream8MaxTemperatureOfLocation {
                 props2.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class.getName());
 
                 // Set up input and output topics
-                String inputTopic1 = "weather-alert-113";
+                String inputTopic1 = "weather-alert-1122";
 
-                String inputTopic2 = "standard-weather-113";
+                String inputTopic2 = "standard-weather-1122";
 
-                String outputFinal = "max-temp-red-alert-weather-station-113";
+                String outputFinal = "max-temp-red-alert-weather-station-1122";
 
                 StreamsBuilder builder1 = new StreamsBuilder();
                 // StreamsBuilder builder2 = new StreamsBuilder();
@@ -98,60 +98,60 @@ public class Stream8MaxTemperatureOfLocation {
                                 JoinWindows.ofTimeDifferenceAndGrace(joinWindowSizeMs, gracePeriod),
                                 StreamJoined.with(Serdes.String(), standardWeatherSerde, weatherAlertSerde));
 
-                // // Duration windowSize = Duration.ofMinutes(5);
-                // // Duration advanceSize = Duration.ofMinutes(1);
-                // // TimeWindows hoppingWindow =
-                // // TimeWindows.ofSizeWithNoGrace(windowSize).advanceBy(advanceSize);
-                // Duration windowSize = Duration.ofMinutes(1440);
-                // TimeWindows window = TimeWindows.of(windowSize);
+                // Duration windowSize = Duration.ofMinutes(5);
+                // Duration advanceSize = Duration.ofMinutes(1);
+                // TimeWindows hoppingWindow =
+                // TimeWindows.ofSizeWithNoGrace(windowSize).advanceBy(advanceSize);
+                Duration windowSize = Duration.ofMinutes(1440);
+                TimeWindows window = TimeWindows.of(windowSize);
 
-                // // joinedStream.groupBy((k, v) -> v.getType()).count();
+                // joinedStream.groupBy((k, v) -> v.getType()).count();
 
-                // // testar->|
-                // // |
-                // // v
-                // KGroupedStream<String, CombinedWeather> minTable = joinedStream
-                //                 .groupBy((k, v) -> v.getLocation(),
-                //                                 Grouped.with(Serdes.String(), combinedWeather));
+                // testar->|
+                // |
+                // v
+                KGroupedStream<String, CombinedWeather> minTable = joinedStream
+                                .groupBy((k, v) -> v.getLocation(),
+                                                Grouped.with(Serdes.String(), combinedWeather));
                 
-                // KStream<String, String> finalStream = minTable.windowedBy(window).aggregate(
-                //                 () -> Integer.MIN_VALUE, // Initialize the aggregation value with the
-                //                                          // maximum possible integer
-                //                                          // value
-                //                 (key, value, aggregate) -> Math.max(value.getTemperature(), aggregate), // Use
-                //                                                                                         // the
-                //                                                                                         // min
-                //                                                                                         // function
-                //                                                                                         // to
-                //                                                                                         // calculate
-                //                                                                                         // the
-                //                                                                                         // minimum
-                //                                                                                         // value
-                //                 Materialized.with(Serdes.String(), Serdes.Integer()))
-                //                 .mapValues(v -> Integer.toString(v))
-                //                 .toStream((wk, v) -> wk.key()).peek((k, v) -> System.out.println("Valueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: " + v));
+                KStream<String, String> finalStream = minTable.windowedBy(window).aggregate(
+                                () -> Integer.MIN_VALUE, // Initialize the aggregation value with the
+                                                         // maximum possible integer
+                                                         // value
+                                (key, value, aggregate) -> Math.max(value.getTemperature(), aggregate), // Use
+                                                                                                        // the
+                                                                                                        // min
+                                                                                                        // function
+                                                                                                        // to
+                                                                                                        // calculate
+                                                                                                        // the
+                                                                                                        // minimum
+                                                                                                        // value
+                                Materialized.with(Serdes.String(), Serdes.Integer()))
+                                .mapValues(v -> Integer.toString(v))
+                                .toStream((wk, v) -> wk.key()).peek((k, v) -> System.out.println("Valueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: " + v));
                 
-                // /*KStream<String, String> finalStream = minTable.aggregate(
-                //          () -> Integer.MIN_VALUE, // Initialize the aggregation value with the
-                //                                   // maximum possible integer
-                //                                   // value
-                //          (key, value, aggregate) -> Math.max(value.getTemperature(), aggregate), // Use
-                //                                                                                  // the
-                //                                                                                  // min
-                //                                                                                  // function
-                //                                                                                 // to
-                //                                                                                 // calculate
-                //                                                                                 // the
-                //                                                                                 // minimum
-                //                                                                                 // value
-                //                                                                                 Materialized.<String, Integer, KeyValueStore<Bytes, byte[]>>as(
-                //                                                                                     "max-store-location").withValueSerde(Serdes.Integer())
-                // )
-                // .mapValues(v -> Integer.toString(v))
-                // .toStream().peek((k, v) -> System.out.println("Value: "+v));
-                // */
-                // // // in a
-                // finalStream.to(outputFinal, Produced.with(Serdes.String(), Serdes.String()));
+                /*KStream<String, String> finalStream = minTable.aggregate(
+                         () -> Integer.MIN_VALUE, // Initialize the aggregation value with the
+                                                  // maximum possible integer
+                                                  // value
+                         (key, value, aggregate) -> Math.max(value.getTemperature(), aggregate), // Use
+                                                                                                 // the
+                                                                                                 // min
+                                                                                                 // function
+                                                                                                // to
+                                                                                                // calculate
+                                                                                                // the
+                                                                                                // minimum
+                                                                                                // value
+                                                                                                Materialized.<String, Integer, KeyValueStore<Bytes, byte[]>>as(
+                                                                                                    "max-store-location").withValueSerde(Serdes.Integer())
+                )
+                .mapValues(v -> Integer.toString(v))
+                .toStream().peek((k, v) -> System.out.println("Value: "+v));
+                */
+                // // in a
+                finalStream.to(outputFinal, Produced.with(Serdes.String(), Serdes.String()));
 
                 KafkaStreams streams1 = new KafkaStreams(builder1.build(), props1);
                 streams1.start();

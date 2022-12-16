@@ -1,0 +1,8 @@
+Distrito de Évora => 30
+Distrito de Viana do Castelo => 34
+Distrito de Santarém => 34
+Distrito de Braga => 28
+Distrito de Aveiro => 39
+Distrito de Setúbal => 38
+Distrito de Castelo Branco => 37
+Distrito de Beja => 36
