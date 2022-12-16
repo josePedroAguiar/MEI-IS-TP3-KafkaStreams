@@ -52,14 +52,14 @@ public class Stream7MinTemperatureOfWS {
                 // Create a Kafka Streams configuration object
                 Properties props1 = new Properties();
                 props1.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-b");
-                props1.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
+                props1.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092,broker2:9092,broker3:9092");
                 props1.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
                 props1.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, WeatherAlertSerde.class.getName());
 
                 // Create a Kafka Streams configuration object
                 Properties props2 = new Properties();
                 props2.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-c");
-                props2.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
+                props2.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092,broker2:9092,broker3:9092");
                 props2.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
                 props2.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class.getName());
 

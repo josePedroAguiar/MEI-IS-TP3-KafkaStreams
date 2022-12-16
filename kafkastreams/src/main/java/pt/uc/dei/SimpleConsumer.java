@@ -15,13 +15,14 @@ import pt.uc.dei.Serializer.StandardWeather;
 import pt.uc.dei.Serializer.StandardWeatherSerde;
 
 public class SimpleConsumer {
+    
     public static void main(String[] args) throws Exception{
         //Assign topicName to string variable
         String topicName = args[0].toString();
         // create instance for properties to access producer configs
         Properties props = new Properties();
         //Assign localhost id
-        props.put("bootstrap.servers", "broker1:9092"); //Set acknowledgements for producer requests. props.put("acks", "all");
+        props.put("bootstrap.servers", "broker1:9092,broker2:9092,broker3:9092"); //Set acknowledgements for producer requests. props.put("acks", "all");
         //If the request fails, the producer can automatically retry,
         props.put("retries", 0);
         //Specify buffer size in config
