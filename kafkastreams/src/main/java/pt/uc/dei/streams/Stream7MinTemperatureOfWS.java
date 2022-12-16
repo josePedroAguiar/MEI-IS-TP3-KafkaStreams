@@ -5,73 +5,55 @@ import java.util.Properties;
 
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KGroupedStream;
 import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
-
 import pt.uc.dei.Serializer.WeatherAlert;
 import pt.uc.dei.Serializer.WeatherAlertSerde;
-import pt.uc.dei.streams.examplesAndTests.SimpleStreamsExercisesa;
-
 import java.time.Duration;
-import java.util.Properties;
-
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.KeyValue;
-import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.Grouped;
 import org.apache.kafka.streams.kstream.JoinWindows;
-import org.apache.kafka.streams.kstream.Joined;
-import org.apache.kafka.streams.kstream.KGroupedStream;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.StreamJoined;
 import org.apache.kafka.streams.kstream.ValueJoiner;
-import org.apache.kafka.streams.state.KeyValueStore;
-
 import pt.uc.dei.Serializer.CombinedWeather;
 import pt.uc.dei.Serializer.CombinedWeatherSerde;
 import pt.uc.dei.Serializer.StandardWeather;
-import pt.uc.dei.Serializer.WeatherAlert;
-import pt.uc.dei.Serializer.WeatherAlertSerde;
-
 import pt.uc.dei.Serializer.StandardWeatherSerde;
 
 public class Stream7MinTemperatureOfWS {
         public static void main(String[] args) throws InterruptedException, IOException {
 
-              
                 // Create a Kafka Streams configuration object
                 Properties props1 = new Properties();
-                props1.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-b");
+                props1.put(StreamsConfig.APPLICATION_ID_CONFIG, "weather-station-application-7-1");
                 props1.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092,broker2:9092,broker3:9092");
                 props1.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
                 props1.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, WeatherAlertSerde.class.getName());
 
                 // Create a Kafka Streams configuration object
                 Properties props2 = new Properties();
-                props2.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-c");
+                props2.put(StreamsConfig.APPLICATION_ID_CONFIG, "weather-station-application-7-2");
                 props2.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092,broker2:9092,broker3:9092");
                 props2.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
                 props2.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class.getName());
 
                 // Set up input and output topics
-                String inputTopic1 = "weather-alert-113";
+                String inputTopic1 = "weather-alert";
 
-                String inputTopic2 = "standard-weather-113";
+                String inputTopic2 = "standard-weather";
 
-                String outputFinal = "min-temp-red-alert-weather-station";
+                String outputFinal = "results";
 
                 StreamsBuilder builder1 = new StreamsBuilder();
-                // StreamsBuilder builder2 = new StreamsBuilder();
+
+                Serde<WeatherAlert> weatherAlertSerde = new WeatherAlertSerde();
+                Serde<StandardWeather> standardWeatherSerde = new StandardWeatherSerde();
+                Serde<CombinedWeather> combinedWeatherSerde = new CombinedWeatherSerde();
 
                 // Read the input topic as a stream of messages
                 KStream<String, WeatherAlert> inputStream1 = builder1.stream(inputTopic1,
@@ -95,10 +77,6 @@ public class Stream7MinTemperatureOfWS {
                         return combined;
                 };
 
-                Serde weatherAlertSerde = new WeatherAlertSerde();
-                Serde standardWeatherSerde = new StandardWeatherSerde();
-                Serde combinedWeather = new CombinedWeatherSerde();
-
                 Duration joinWindowSizeMs = Duration.ofHours(1);
                 Duration gracePeriod = Duration.ofHours(24);
 
@@ -106,13 +84,8 @@ public class Stream7MinTemperatureOfWS {
                                 JoinWindows.ofTimeDifferenceAndGrace(joinWindowSizeMs, gracePeriod),
                                 StreamJoined.with(Serdes.String(), standardWeatherSerde, weatherAlertSerde));
 
-                // joinedStream.groupBy((k, v) -> v.getType()).count();
-
-       
                 KGroupedStream<String, CombinedWeather> minTable = joinedStream.groupBy((k, v) -> v.getType(),
-                Grouped.with(Serdes.String(), combinedWeather)
-                    )
-                    ;
+                                Grouped.with(Serdes.String(), combinedWeatherSerde));
 
                 KStream<String, String> finalStream = minTable
                                 .aggregate(
@@ -132,15 +105,10 @@ public class Stream7MinTemperatureOfWS {
                                 .mapValues(v -> Integer.toString(v))
                                 .toStream().peek((k, v) -> System.out.println("Value: " + v));
 
-                // // in a
-                finalStream
-                .to(outputFinal, Produced.with(Serdes.String(), Serdes.String()));
+                finalStream.to(outputFinal, Produced.with(Serdes.String(), Serdes.String()));
 
                 KafkaStreams streams1 = new KafkaStreams(builder1.build(), props1);
                 streams1.start();
-                // KafkaStreams streams2 = new KafkaStreams(builder2.build(), props2);
-                // streams2.start();
-                // System.out.println("################################################################3");
 
         }
 }

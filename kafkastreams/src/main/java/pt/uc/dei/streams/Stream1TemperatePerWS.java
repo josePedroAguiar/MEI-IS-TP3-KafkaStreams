@@ -16,26 +16,21 @@ import org.apache.kafka.streams.kstream.Produced;
 
 import pt.uc.dei.Serializer.StandardWeather;
 import pt.uc.dei.Serializer.StandardWeatherSerde;
-import pt.uc.dei.streams.examplesAndTests.SimpleStreamsExercisesa;
 
 public class Stream1TemperatePerWS {
     public static void main(String[] args) throws InterruptedException, IOException {
-        if (args.length != 2) {
-            System.err.println("Wrong arguments. Please run the class as follows:");
-            System.err.println(SimpleStreamsExercisesa.class.getName() + " input-topic output-topic");
-            System.exit(1);
-        }
+        
         // Create a Kafka Streams configuration object
         Properties streamsConfig = new Properties();
-        streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-a");
+        streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "weather-station-application-1");
         streamsConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092,broker2:9092,broker3:9092");
         streamsConfig.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class.getName());
 
 
         // Define the input and output topics
-        String inputTopic = "standard-weather9";
-        String outputTopic = "temperature-readings-count2";
+        String inputTopic = "standard-weather";
+        String outputTopic = "temperature-readings";
 
         // Create a Kafka Streams builder
         StreamsBuilder builder = new StreamsBuilder();

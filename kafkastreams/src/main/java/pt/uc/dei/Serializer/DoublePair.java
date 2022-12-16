@@ -1,12 +1,5 @@
 package pt.uc.dei.Serializer;
 
-import java.nio.ByteBuffer;
-import java.util.Map;
-
-import org.apache.kafka.common.serialization.Deserializer;
-
-import scala.annotation.meta.getter;
-
 public class DoublePair{
     private double min;
     private double max;

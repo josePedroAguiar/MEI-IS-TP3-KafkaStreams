@@ -8,12 +8,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-
-import pt.uc.dei.Serializer.DoublePair;
-import pt.uc.dei.Serializer.DoublePairSerde;
-import pt.uc.dei.Serializer.StandardWeather;
-import pt.uc.dei.Serializer.StandardWeatherSerde;
-
 public class SimpleConsumer {
     
     public static void main(String[] args) throws Exception{
@@ -32,62 +26,10 @@ public class SimpleConsumer {
         //The buffer.memory controls the total amount of memory available to the producer for buffering.
         props.put("buffer.memory", 33554432);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaExampleConsumer");
-        //props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        //props.put("value.deserializer", StandardWeatherSerde.class.getName());
-        //Consumer<String, StandardWeather> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
-        
-        //props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        //props.put("value.deserializer", "org.apache.kafka.common.serialization.LongDeserializer");
-        //Consumer<String, Long> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
-
-
-        //props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        //props.put("value.deserializer", DoublePairSerde.class.getName());
-        //Consumer<String, DoublePair> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
 
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
         Consumer<String, String> consumer = new KafkaConsumer<>(props); consumer.subscribe(Collections.singletonList(topicName));
-             /*try {
-            while (true) {
-                Duration d = Duration.ofSeconds(1000000);
-                ConsumerRecords<String, StandardWeather> records = consumer.poll(d);
-                for (ConsumerRecord<String, StandardWeather> record : records) {
-                    System.out.println(record.key() + " => " + record.value().getLocation()); 
-                }
-                return;
-            }    
-        }
-        finally {
-            consumer.close();
-        }*/
-        /*try {
-            while (true) {
-                Duration d = Duration.ofSeconds(1000000);
-                ConsumerRecords<String, StandardWeather> records = consumer.poll(d);
-                for (ConsumerRecord<String, StandardWeather> record : records) {
-                    System.out.println(record.key() + " => " + record.value().getLocation()); 
-                }
-                return;
-            }    
-        }
-        finally {
-            consumer.close();
-        }*/
-
-        /*try {
-            while (true) {
-                Duration d = Duration.ofSeconds(1000000);
-                ConsumerRecords<String, DoublePair> records = consumer.poll(d);
-                for (ConsumerRecord<String, DoublePair> record : records) {
-                    System.out.println(record.key() + " => " + record.value().getMax() + " "+ record.value().getMin()); 
-                }
-                return;
-            }    
-        }
-        finally {
-            consumer.close();
-        }*/
         try {
             while (true) {
                 Duration d = Duration.ofSeconds(1000000);

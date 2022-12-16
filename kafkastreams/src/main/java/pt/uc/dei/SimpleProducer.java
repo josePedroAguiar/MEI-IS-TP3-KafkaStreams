@@ -1,24 +1,14 @@
 package pt.uc.dei;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-import java.io.BufferedWriter;
-import java.io.File; // Import the File class
-import java.io.FileWriter;
-import java.io.IOException; // Import the IOException class to handle errors
+
 
 import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.Serializer;
-import org.json.JSONObject;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pt.uc.dei.Serializer.StandardWeather;
 import pt.uc.dei.Serializer.StandardWeatherSerde;
@@ -101,7 +91,6 @@ public class SimpleProducer {
                 }
 
             }
-
         }
     }
 
@@ -116,7 +105,7 @@ public class SimpleProducer {
             String out = "Key: " + Integer.toString(key) + " Temperature: " + 1
                     + " Location: " + user.getLocation()+"\n";
             System.out.println(out);
-            filewriter.writeToFile("Producer_" + topicName + "s.txt", out);
+            WriteFiles.writeToFile("Producer_" + topicName + "s.txt", out);
             producer.send(
                     new ProducerRecord<String, StandardWeather>(topicName, Integer.toString(key), user));
 
@@ -134,7 +123,7 @@ public class SimpleProducer {
             String out = "Key: " + Integer.toString(key) + " type: " + user.getType() + " Location: "
                     + user.getLocation()+"\n";
             System.out.println(out);
-            filewriter.writeToFile("Producer_" + topicName + "s.txt", out);
+            WriteFiles.writeToFile("Producer_" + topicName + "s.txt", out);
             producer.send(new ProducerRecord<String, WeatherAlert>(topicName, Integer.toString(key), user));
         }
         producer.close();
