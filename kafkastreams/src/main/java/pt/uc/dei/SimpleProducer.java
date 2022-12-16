@@ -27,7 +27,7 @@ import pt.uc.dei.Serializer.WeatherAlertSerde;
 
 public class SimpleProducer {
 
-    static final String[] topics = { "standard-weather-1122", "weather-alert-1122" };
+    static final String[] topics = { "standard-weather-33", "weather-alert-33" };
     static final List<String> topicNames = Arrays.asList(topics);
 
     static final String[] al = { "Distrito de Beja", "Distrito de Évora", "Distrito de Santarém",
@@ -111,8 +111,8 @@ public class SimpleProducer {
         for (int i = 0; i < 10; i++) {
             int key = r.nextInt(al.length * 4);
             int pos = key / 4;
-            StandardWeather user = new StandardWeather(r.nextInt(50) - 10, al[pos]);
-            String out = "Key: " + Integer.toString(key) + " Temperature: " + user.getTemperature()
+            StandardWeather user = new StandardWeather(1, al[pos]);
+            String out = "Key: " + Integer.toString(key) + " Temperature: " + 1
                     + " Location: " + user.getLocation()+"\n";
             System.out.println(out);
             filewriter.writeToFile("Producer_" + topicName + "s.txt", out);
