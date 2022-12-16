@@ -1,9 +1,5 @@
 package pt.uc.dei.Serializer;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
-
-
 public class WeatherAlert {
     String type;
     String location;

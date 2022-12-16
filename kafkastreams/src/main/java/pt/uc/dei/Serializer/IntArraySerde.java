@@ -1,4 +1,4 @@
-package pt.uc.dei.streams;
+package pt.uc.dei.Serializer;
 
 
 import java.nio.ByteBuffer;

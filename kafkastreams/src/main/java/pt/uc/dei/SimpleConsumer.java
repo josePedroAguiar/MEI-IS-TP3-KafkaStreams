@@ -39,7 +39,6 @@ public class SimpleConsumer {
                     System.out.println(out);
                     WriteFiles.writeToFile("Consumer_" + topicName + "s.txt", out); 
                 }
-                return;
             }    
         }
         finally {

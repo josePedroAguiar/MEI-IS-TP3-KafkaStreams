@@ -18,7 +18,7 @@ import pt.uc.dei.Serializer.WeatherAlertSerde;
 
 public class SimpleProducer {
 
-    static final String[] topics = { "standard-weather-33", "weather-alert-33" };
+    static final String[] topics = { "standard-weather", "weather-alert" };
     static final List<String> topicNames = Arrays.asList(topics);
 
     static final String[] al = { "Distrito de Beja", "Distrito de Évora", "Distrito de Santarém",

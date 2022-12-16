@@ -41,7 +41,7 @@ public class Stream11AverageTemperature {
 
                 StreamsBuilder builder1 = new StreamsBuilder();
                 // StreamsBuilder builder2 = new StreamsBuilder();
-
+                
                 // Read the input topic as a stream of messages
                 KStream<String, WeatherAlert> inputStream1 = builder1.stream(inputTopic1,
                                 Consumed.with(Serdes.String(), new WeatherAlertSerde()));
