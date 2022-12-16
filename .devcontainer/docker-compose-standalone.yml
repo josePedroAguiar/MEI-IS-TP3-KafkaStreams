@@ -44,6 +44,38 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker1:9092,EXTERNAL://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+  broker2:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker2
+    ports:
+      - 39092:39092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_BROKER_RACK: "r2"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:32181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker2:9092,EXTERNAL://localhost:39092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    
+  broker3:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker3
+    ports:
+      - 49092:49092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_BROKER_RACK: "r3"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:32181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker3:9092,EXTERNAL://localhost:49092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  
   connect:
     #build:
     #  context: .
@@ -52,13 +84,19 @@ services:
     container_name: connect
     depends_on:
       - broker1
+      - broker2
+      - broker3
     ports:
       - 8083:8083
     links:
       - broker1
+      - broker2
+      - broker3
       - database
     environment:
       - CONNECT_BOOTSTRAP_SERVERS=broker1:9092
+      - CONNECT_BOOTSTRAP_SERVERS=broker2:9092
+      - CONNECT_BOOTSTRAP_SERVERS=broker3:9092
       - CONNECT_REST_ADVERTISED_PORT=8083
       - CONNECT_REST_ADVERTISED_HOST_NAME=connect
       - CONNECT_GROUP_ID=connect
@@ -86,6 +124,8 @@ services:
     links:
       - database
       - broker1
+      - broker2
+      - broker3
       - zookeeper
     volumes:
       - ..:/workspace

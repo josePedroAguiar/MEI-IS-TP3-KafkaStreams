@@ -25,6 +25,7 @@ import pt.uc.dei.Serializer.StandardWeatherSerde;
 import pt.uc.dei.Serializer.WeatherAlert;
 import pt.uc.dei.Serializer.WeatherAlertSerde;
 
+
 public class SimpleProducer {
 
     static final String[] topics = { "standard-weather-1122", "weather-alert-1122" };
@@ -46,7 +47,7 @@ public class SimpleProducer {
         String topicName;
         Properties props = new Properties(); // Assign localhost id
 
-        props.put("bootstrap.servers", "broker1:9092");
+        props.put("bootstrap.servers", "broker1:9092,broker2:9092,broker3:9092");
         // Set acknowledgements for producer requests. props.put("acks", "all");
         // If the request fails, the producer can automatically retry,
         props.put("retries", 0);

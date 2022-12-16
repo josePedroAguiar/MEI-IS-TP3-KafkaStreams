@@ -40,7 +40,7 @@ public class Stream4MinMaxTemperaturePerLocation {
                 // Create a Kafka Streams configuration object
                 Properties streamsConfig = new Properties();
                 streamsConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "exercises-application-a");
-                streamsConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092");
+                streamsConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "broker1:9092,broker2:9092,broker3:9092");
                 streamsConfig.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
                 streamsConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, StandardWeatherSerde.class);
 
